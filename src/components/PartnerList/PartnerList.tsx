@@ -10,6 +10,10 @@ const Container = styled.section`
   // todo: remove / update this in the development ticket of partner list UI
   display: grid;
   place-content: center;
+
+  text-align: center;
+
+  overflow: hidden;
 `;
 
 function PartnerList() {

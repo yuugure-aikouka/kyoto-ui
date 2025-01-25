@@ -7,7 +7,7 @@ const GlobalStyles = createGlobalStyle`
     color: var(--color-text);
 
     --laptop: 1024px;
-    --tablet: 780px;
+    --tablet: 768px;
     --mobile: 425px;
   }
 

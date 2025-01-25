@@ -38,6 +38,11 @@ const Container = styled.div`
   }
 `;
 
+const Content = styled.p`
+  hyphens: auto;
+  -webkit-hyphens: auto;
+`;
+
 const ChatBubble = ({ children, sender }: Props) => {
   return (
     <Container
@@ -48,7 +53,7 @@ const ChatBubble = ({ children, sender }: Props) => {
           '--right-margin': MARGIN_RIGHT_MAPPER[sender],
         } as React.CSSProperties
       }>
-      {children}
+      <Content>{children}</Content>
     </Container>
   );
 };

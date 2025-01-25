@@ -7,12 +7,7 @@ import ChatHistory from '@/components/ChatBox/ChatHistory';
 import Input from '@/components/ChatBox/Input';
 
 import { Chat } from '@/components/ChatBox/ChatHistory';
-
-type ChatBoxProps = {
-  avatarUrl: string;
-  name: string;
-  history?: Chat[];
-};
+import { getChat } from '@/mocks/chat';
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +18,41 @@ const Container = styled.div`
   }
 `;
 
-const ChatBox = ({ avatarUrl, name, history = [] }: ChatBoxProps) => {
+const formatHistory = ({
+  chat_id,
+  is_my_chat,
+  content,
+  timestamp,
+}: {
+  chat_id: string;
+  content: string;
+  is_my_chat: boolean;
+  timestamp: number;
+}): Chat => {
+  return {
+    chatId: chat_id,
+    content,
+    timestamp,
+    isMyChat: is_my_chat,
+  };
+};
+
+const fetchChatData = (): {
+  avatarUrl: string;
+  name: string;
+  history: Chat[];
+} => {
+  const { avatar_url, display_name, history } = getChat();
+
+  return {
+    avatarUrl: avatar_url,
+    name: display_name,
+    history: history.map((entry) => formatHistory(entry)),
+  };
+};
+
+const ChatBox = () => {
+  const { avatarUrl, name, history } = fetchChatData();
   const [chatHistory, setChatHistory] =
     React.useState<Chat[]>(history);
 

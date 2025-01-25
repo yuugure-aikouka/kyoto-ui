@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Interactable from '@/components/Interactable';
 
 import { Send } from 'react-feather';
+import { isBlank } from '@/utils/string';
 
 type Props = {
   onSubmit: (content: string) => void;
@@ -39,7 +40,10 @@ const Input = ({ onSubmit }: Props) => {
   const [value, setValue] = React.useState<string>('');
 
   const submitAndClear = (): void => {
-    onSubmit(value);
+    if (!isBlank(value)) {
+      onSubmit(value);
+    }
+
     setValue('');
   };
 
