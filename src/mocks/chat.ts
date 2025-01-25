@@ -6,16 +6,22 @@ const getChat = () => {
     username: 'milkers728',
     history: [
       {
-        chat_id: '[string]',
+        chat_id: '1',
         is_my_chat: false,
         content: 'how r u?',
-        timestamp: 1737792062,
+        timestamp: 1737792062000,
       },
       {
-        chat_id: '[string]',
+        chat_id: '2',
         is_my_chat: true,
         content: "i'm good lol",
-        timestamp: 1737792063,
+        timestamp: 1737825627000,
+      },
+      {
+        chat_id: '3',
+        is_my_chat: true,
+        content: 'are you interested in building a project with me?',
+        timestamp: 1737826759000,
       },
     ],
   };

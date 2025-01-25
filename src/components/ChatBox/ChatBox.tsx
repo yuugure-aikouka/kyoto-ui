@@ -6,9 +6,12 @@ import Header from '@/components/ChatBox/Header';
 import ChatHistory from '@/components/ChatBox/ChatHistory';
 import Input from '@/components/ChatBox/Input';
 
+import { Chat } from '@/components/ChatBox/ChatHistory';
+
 type ChatBoxProps = {
   avatarUrl: string;
   name: string;
+  history?: Chat[];
 };
 
 const Container = styled.div`
@@ -20,12 +23,12 @@ const Container = styled.div`
   }
 `;
 
-const ChatBox = ({ avatarUrl, name }: ChatBoxProps) => {
+const ChatBox = ({ avatarUrl, name, history }: ChatBoxProps) => {
   return (
     <Container>
       <Header avatarUrl={avatarUrl} name={name} />
 
-      <ChatHistory />
+      <ChatHistory chats={history} />
 
       <Input />
     </Container>
