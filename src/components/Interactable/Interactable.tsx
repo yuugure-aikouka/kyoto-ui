@@ -1,9 +1,9 @@
 'use client';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  children: ReactNode;
+  children: React.ReactNode;
   onClick?: () => void;
 };
 

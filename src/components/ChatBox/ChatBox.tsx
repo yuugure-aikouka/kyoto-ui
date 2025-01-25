@@ -3,6 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Header from '@/components/ChatBox/Header';
+import ChatHistory from '@/components/ChatBox/ChatHistory';
+import Input from '@/components/ChatBox/Input';
 
 type ChatBoxProps = {
   avatarUrl: string;
@@ -18,24 +20,14 @@ const Container = styled.div`
   }
 `;
 
-const Section = styled.section`
-  outline: 2px dashed black;
-
-  display: grid;
-  place-content: center;
-
-  height: 48px;
-`;
-
 const ChatBox = ({ avatarUrl, name }: ChatBoxProps) => {
   return (
     <Container>
-      {/* header */}
       <Header avatarUrl={avatarUrl} name={name} />
-      {/* chat box */}
-      <section></section>
-      {/* interactions */}
-      <Section>interactive sections</Section>
+
+      <ChatHistory />
+
+      <Input />
     </Container>
   );
 };

@@ -19,7 +19,6 @@ const Container = styled.section`
 
   height: fit-content;
   padding: 4px 16px;
-  outline: 2px dashed black;
 `;
 
 const Name = styled.span`
