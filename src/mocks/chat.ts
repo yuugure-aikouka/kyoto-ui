@@ -8,7 +8,7 @@ const getChat = () => {
       {
         chat_id: '[string]',
         is_my_chat: false,
-        content: 'sup bitch',
+        content: 'how r u?',
         timestamp: 1737792062,
       },
       {
