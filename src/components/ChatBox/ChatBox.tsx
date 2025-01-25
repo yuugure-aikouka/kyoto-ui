@@ -23,14 +23,29 @@ const Container = styled.div`
   }
 `;
 
-const ChatBox = ({ avatarUrl, name, history }: ChatBoxProps) => {
+const ChatBox = ({ avatarUrl, name, history = [] }: ChatBoxProps) => {
+  const [chatHistory, setChatHistory] =
+    React.useState<Chat[]>(history);
+
+  const addNewChat = (content: string): void => {
+    const newChatHistory = [...chatHistory];
+    newChatHistory.push({
+      chatId: crypto.randomUUID(),
+      content,
+      timestamp: Date.now(),
+      isMyChat: true,
+    });
+
+    setChatHistory(newChatHistory);
+  };
+
   return (
     <Container>
       <Header avatarUrl={avatarUrl} name={name} />
 
-      <ChatHistory chats={history} />
+      <ChatHistory chats={chatHistory} />
 
-      <Input />
+      <Input onSubmit={addNewChat} />
     </Container>
   );
 };

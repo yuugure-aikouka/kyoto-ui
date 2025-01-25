@@ -34,9 +34,9 @@ const Timestamp = styled.span`
 
 const isNewDay = (
   newTimestamp: number,
-  previousTimestamp: number
+  previousTimestamp: number | null
 ): boolean => {
-  if (previousTimestamp == -1) {
+  if (previousTimestamp == null) {
     return true;
   }
 
@@ -56,7 +56,7 @@ const ChatHistory = ({ chats = [] }: Props) => {
               {/* basically, we only render the 'date-month-year' of the day once */}
               {isNewDay(
                 timestamp,
-                index > 0 ? chats[index - 1].timestamp : -1
+                index > 0 ? chats[index - 1].timestamp : null
               ) && <Timestamp>{epochToDate(timestamp)}</Timestamp>}
               <Timestamp>{epochToHour(timestamp)}</Timestamp>
               <ChatBubble

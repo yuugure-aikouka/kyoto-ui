@@ -7,7 +7,11 @@ type Props = {
   onClick?: () => void;
 };
 
-const Container = styled.span`
+const Container = styled.button`
+  // reset button default style
+  border: none;
+  background: none;
+
   &:hover {
     cursor: pointer;
   }

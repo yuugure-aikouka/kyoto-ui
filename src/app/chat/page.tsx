@@ -12,8 +12,8 @@ const formatHistory = ({
   timestamp,
 }: {
   chat_id: string;
-  is_my_chat: boolean;
   content: string;
+  is_my_chat: boolean;
   timestamp: number;
 }): Chat => {
   return {
