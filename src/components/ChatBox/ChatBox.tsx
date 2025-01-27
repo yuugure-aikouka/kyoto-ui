@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import Header from '@/components/ChatBox/Header';
 import ChatHistory from '@/components/ChatBox/ChatHistory';
 import Input from '@/components/ChatBox/Input';
+import PATHS from '@/const/PATHS';
 
+import { post } from '@/network';
 import { Chat } from '@/components/ChatBox/ChatHistory';
 import { getChat } from '@/mocks/chat';
 
@@ -57,26 +59,58 @@ const ChatBox = () => {
   const { avatarUrl, name, isAi, history } = fetchChatData();
   const [chatHistory, setChatHistory] =
     React.useState<Chat[]>(history);
+  const [isPartnerTyping, setIsPartnerTyping] = React.useState(false);
 
-  const addNewChat = (content: string): void => {
-    const newChatHistory = [...chatHistory];
-    newChatHistory.push({
-      chatId: crypto.randomUUID(),
-      content,
-      timestamp: Date.now(),
-      isMyChat: true,
+  const addNewChat = (
+    content: string,
+    isMyChat: boolean = true
+  ): void => {
+    setChatHistory((previousChatHistory) => {
+      const newChatHistory = [...previousChatHistory];
+      newChatHistory.push({
+        chatId: crypto.randomUUID(),
+        content,
+        timestamp: Date.now(),
+        isMyChat,
+      });
+
+      return newChatHistory;
     });
+  };
 
-    setChatHistory(newChatHistory);
+  const getPartnerResponse = (content: string): void => {
+    setIsPartnerTyping(true);
+
+    const data = { message: content };
+    post({
+      path: PATHS.chat_gemini,
+      data,
+      callback: (response) => {
+        addNewChat(response.data?.data, false);
+        setIsPartnerTyping(false);
+      },
+    });
   };
 
   return (
     <Container>
       <Header avatarUrl={avatarUrl} name={name} isAi={isAi} />
 
-      <ChatHistory chats={chatHistory} />
+      <ChatHistory
+        isPartnerTyping={isPartnerTyping}
+        chats={chatHistory}
+      />
 
-      <Input onSubmit={addNewChat} />
+      <Input
+        onSubmit={(chat: string) => {
+          addNewChat(chat);
+
+          // todo: in the future, below AI (incoming chat) listener should be placed in a backend server
+          if (!isAi) return;
+
+          getPartnerResponse(chat);
+        }}
+      />
     </Container>
   );
 };

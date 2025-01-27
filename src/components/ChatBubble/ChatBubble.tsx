@@ -25,7 +25,7 @@ const MARGIN_RIGHT_MAPPER = {
   them: 'auto',
 };
 
-const Container = styled.div`
+export const Container = styled.div`
   width: fit-content;
   background-color: var(--bubble-color);
 

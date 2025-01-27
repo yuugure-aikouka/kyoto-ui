@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ChatBubble from '@/components/ChatBubble';
+import TypingAnimation from '@/components/ChatBubble/TypingAnimation';
 
 import { Section } from '@/components/ChatBox/styled-components';
 import { epochToDate, epochToHour } from '@/utils/time';
@@ -17,6 +18,7 @@ export type Chat = {
 
 type Props = {
   chats?: Chat[];
+  isPartnerTyping: boolean;
 };
 
 const determineSender = (isMyChat: boolean): 'me' | 'them' => {
@@ -43,7 +45,7 @@ const isNewDay = (
   return epochToDate(newTimestamp) != epochToDate(previousTimestamp);
 };
 
-const ChatHistory = ({ chats = [] }: Props) => {
+const ChatHistory = ({ chats = [], isPartnerTyping }: Props) => {
   return (
     <Section>
       {chats.map(
@@ -67,6 +69,11 @@ const ChatHistory = ({ chats = [] }: Props) => {
             </React.Fragment>
           );
         }
+      )}
+      {isPartnerTyping && (
+        <ChatBubble sender="them">
+          <TypingAnimation />
+        </ChatBubble>
       )}
     </Section>
   );

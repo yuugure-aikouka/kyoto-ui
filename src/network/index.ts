@@ -1,27 +1,26 @@
-import { AxiosInstance, AxiosError, AxiosResponse } from 'axios';
-import { googleGenaiInstance } from './axios-instance';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 export const post = async ({
-  path = '/',
+  path,
   data,
-  instance = googleGenaiInstance,
   callback,
   errorHandler,
 }: {
-  path?: string;
+  path: string;
   data?: object;
-  instance?: AxiosInstance;
   callback?: (response: AxiosResponse) => void;
   errorHandler?: (error: AxiosError) => void;
 }) => {
-  return instance
+  return axios
     .post(path, data)
     .then((response) => {
-      if (!callback) return;
-      callback(response);
+      if (callback) {
+        callback(response);
+      }
     })
-    .catch((error) => {
-      if (!errorHandler) return;
-      errorHandler(error);
+    .catch((error: AxiosError) => {
+      if (errorHandler) {
+        errorHandler(error);
+      }
     });
 };
