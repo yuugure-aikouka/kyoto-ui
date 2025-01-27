@@ -107,7 +107,7 @@ const useChatData = (username: string) => {
       avatarUrl,
       isAi,
       isPartnerTyping,
-      history,
+      history: chatHistory,
     },
     actions: {
       addNewChat,

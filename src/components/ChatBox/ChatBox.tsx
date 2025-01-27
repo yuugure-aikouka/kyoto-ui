@@ -62,7 +62,7 @@ const ChatBox = () => {
     );
   }
 
-  return <ActiveChatBox username={username} />;
+  return <ActiveChatBox key={username} username={username} />;
 };
 
 export default ChatBox;
