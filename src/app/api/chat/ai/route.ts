@@ -7,6 +7,7 @@ export const POST = async (request: Request): Promise<Response> => {
   return genericHandler(() => {
     return chatService.getAiResponse({
       message: requestBody?.message,
+      history: requestBody?.history,
     });
   });
 };

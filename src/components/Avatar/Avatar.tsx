@@ -9,8 +9,8 @@ type AvatarProps = {
 
 const AVATAR_SIZES = {
   small: `${36 / 16}rem`,
-  medium: `${56 / 16}rem`,
-  large: `${72 / 16}rem`,
+  medium: `${48 / 16}rem`,
+  large: `${62 / 16}rem`,
 };
 
 const Img = styled.img`

@@ -55,6 +55,15 @@ const fetchChatData = (): {
   };
 };
 
+const chatToDialog = (chatHistory: Chat[]): string[] => {
+  return chatHistory.map(({ isMyChat, content }) => {
+    return JSON.stringify({
+      them: isMyChat ? content : undefined,
+      you: !isMyChat ? content : undefined,
+    });
+  });
+};
+
 const ChatBox = () => {
   const { avatarUrl, name, isAi, history } = fetchChatData();
   const [chatHistory, setChatHistory] =
@@ -81,7 +90,15 @@ const ChatBox = () => {
   const getPartnerResponse = (content: string): void => {
     setIsPartnerTyping(true);
 
-    const data = { message: content };
+    const data = {
+      message: content,
+      history: chatToDialog(
+        chatHistory.slice(
+          Math.max(0, chatHistory.length - 25),
+          chatHistory.length
+        )
+      ),
+    };
     post({
       path: PATHS.chat_gemini,
       data,

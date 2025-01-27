@@ -46,6 +46,15 @@ const isNewDay = (
 };
 
 const ChatHistory = ({ chats = [], isPartnerTyping }: Props) => {
+  const messagesEndRef = React.useRef<null | HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [chats]);
+
   return (
     <Section>
       {chats.map(
@@ -75,6 +84,7 @@ const ChatHistory = ({ chats = [], isPartnerTyping }: Props) => {
           <TypingAnimation />
         </ChatBubble>
       )}
+      <div ref={messagesEndRef} />
     </Section>
   );
 };
