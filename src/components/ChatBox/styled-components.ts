@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 export const Section = styled.section`
-  /* border: 2px dashed black; */
+  /* border: 2px dashed black;  */
 
   display: flex;
   flex-direction: column;
