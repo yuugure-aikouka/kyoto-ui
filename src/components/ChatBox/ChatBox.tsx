@@ -76,6 +76,7 @@ const MobileInactiveChatBox = styled.div`
   }
 `;
 
+// todo: refactor
 const InactiveChatBox = ({ partners }: PartnerPreviewListType) => {
   return (
     <>
