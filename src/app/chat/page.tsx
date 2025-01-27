@@ -37,7 +37,7 @@ const Page = () => {
     <CurrentPartnerProvider>
       <ChatLayout>
         <PartnerList partners={partnerList} />
-        <ChatBox />
+        <ChatBox partners={partnerList} />
       </ChatLayout>
     </CurrentPartnerProvider>
   );

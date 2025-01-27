@@ -6,13 +6,12 @@ import PartnerPreviewChat, {
   PartnerPreviewType,
 } from '@/components/PartnerPreviewChat';
 
-type Props = {
+export type PartnerPreviewListType = {
   partners: PartnerPreviewType[];
 };
 
 const Layout = styled.div`
   overflow: auto;
-  border: 2px dashed var(--color-primary);
   // this is only temporary
   // todo: remove / update this in the development ticket of partner list UI
   /* display: grid;
@@ -26,7 +25,7 @@ const PartnersContainer = styled.section`
   gap: 8px;
 `;
 
-function PartnerList({ partners }: Props) {
+function PartnerList({ partners }: PartnerPreviewListType) {
   return (
     <Layout>
       <PartnersContainer>

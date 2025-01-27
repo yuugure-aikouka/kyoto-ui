@@ -6,8 +6,10 @@ import Header from '@/components/ChatBox/Header';
 import ChatHistory from '@/components/ChatBox/ChatHistory';
 import Input from '@/components/ChatBox/Input';
 import useChatData from '@/hooks/useChatData';
+import PartnerList from '@/components/PartnerList';
 
 import { CurrentPartnerContext } from '@/components/CurrentPartnerProvider';
+import { PartnerPreviewListType } from '@/components/PartnerList';
 
 const Container = styled.div`
   display: flex;
@@ -16,6 +18,8 @@ const Container = styled.div`
   & > *:nth-child(2) {
     flex: 1;
   }
+
+  outline: 2px dashed var(--color-primary);
 `;
 
 const ActiveChatBox = ({ username }: { username: string }) => {
@@ -48,18 +52,46 @@ const ActiveChatBox = ({ username }: { username: string }) => {
   );
 };
 
-const InactiveChatBox = styled.div`
+const DesktopInactiveChatBox = styled.div`
   display: grid;
   place-content: center;
+  width: 100%;
+
+  outline: 2px dashed var(--color-primary);
+
+  @media (max-width: ${768 / 16}rem) {
+    display: none;
+  }
 `;
 
-const ChatBox = () => {
+const MobileInactiveChatBox = styled.div`
+  display: none;
+  @media (max-width: ${768 / 16}rem) {
+    display: block;
+    display: grid;
+    place-content: center;
+    width: 100%;
+  }
+`;
+
+const InactiveChatBox = ({ partners }: PartnerPreviewListType) => {
+  return (
+    <>
+      <DesktopInactiveChatBox>
+        start a chat with someone!
+      </DesktopInactiveChatBox>
+      <MobileInactiveChatBox>
+        <PartnerList partners={partners} />
+      </MobileInactiveChatBox>
+    </>
+  );
+};
+
+const ChatBox = ({ partners }: PartnerPreviewListType) => {
   const { username } = React.useContext(CurrentPartnerContext);
 
   if (!username) {
-    return (
-      <InactiveChatBox>start a chat with someone!</InactiveChatBox>
-    );
+    return <InactiveChatBox partners={partners} />;
   }
 
   return <ActiveChatBox key={username} username={username} />;
