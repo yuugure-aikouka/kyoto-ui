@@ -4,6 +4,7 @@ const getChat = () => {
       'https://play-lh.googleusercontent.com/i8fGO7LrghUKcBCijVf09Vy_FET5-tCh35O6FTFjkHUMixnCRokmaKMZOKNvf4k2P3Y',
     display_name: 'barrack obama',
     username: 'milkers728',
+    is_ai: true,
     history: [
       {
         chat_id: '2',

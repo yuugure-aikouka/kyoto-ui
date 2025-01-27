@@ -40,19 +40,21 @@ const formatHistory = ({
 const fetchChatData = (): {
   avatarUrl: string;
   name: string;
+  isAi: boolean;
   history: Chat[];
 } => {
-  const { avatar_url, display_name, history } = getChat();
+  const { avatar_url, display_name, is_ai, history } = getChat();
 
   return {
     avatarUrl: avatar_url,
     name: display_name,
+    isAi: is_ai,
     history: history.map((entry) => formatHistory(entry)),
   };
 };
 
 const ChatBox = () => {
-  const { avatarUrl, name, history } = fetchChatData();
+  const { avatarUrl, name, isAi, history } = fetchChatData();
   const [chatHistory, setChatHistory] =
     React.useState<Chat[]>(history);
 
@@ -70,7 +72,7 @@ const ChatBox = () => {
 
   return (
     <Container>
-      <Header avatarUrl={avatarUrl} name={name} />
+      <Header avatarUrl={avatarUrl} name={name} isAi={isAi} />
 
       <ChatHistory chats={chatHistory} />
 
