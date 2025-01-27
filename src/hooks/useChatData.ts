@@ -89,6 +89,7 @@ const useChatData = (username: string) => {
           chatHistory.length
         )
       ),
+      character_name: name,
     };
     post({
       path: PATHS.chat_gemini,

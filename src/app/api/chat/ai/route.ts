@@ -8,6 +8,7 @@ export const POST = async (request: Request): Promise<Response> => {
     return chatService.getAiResponse({
       message: requestBody?.message,
       history: requestBody?.history,
+      characterName: requestBody?.character_name,
     });
   });
 };

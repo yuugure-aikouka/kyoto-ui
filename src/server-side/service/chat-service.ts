@@ -2,14 +2,15 @@ import googleOutboundService from '@/server-side/service/outbound/google-outboun
 
 const getAiResponse = async ({
   model = 'gemini-15-flash',
-  character = 'Barrack Obama',
   message,
   history,
+  characterName,
 }: {
   model?: string;
   character?: string;
   message: string;
   history: string[];
+  characterName: string;
 }): Promise<string> => {
   if (model != 'gemini-15-flash') {
     throw new Error(
@@ -18,7 +19,7 @@ const getAiResponse = async ({
   }
 
   const prompt = `
-You are roleplaying as ${character} in the app Mateify. You respond as if you’re talking to a friend, keeping things friendly and casual. Your responses are always in lowercase letters, no capital letters at all.
+You are roleplaying as ${characterName} in the app Mateify. You respond as if you’re talking to a friend.
 
 Here's the chat history for context: ${history}
 
