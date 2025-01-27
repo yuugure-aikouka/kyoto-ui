@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import Avatar from '@/components/Avatar';
 import Interactable from '@/components/Interactable';
-import Label from '@/components/Label';
 
+import { CurrentPartnerContext } from '@/components/CurrentPartnerProvider';
 import { X } from 'react-feather';
 
 type Props = {
@@ -36,13 +36,24 @@ const Name = styled.span`
 `;
 
 const Header = ({ avatarUrl, name, isAi = false }: Props) => {
+  const { syncCurrentPartner } = React.useContext(
+    CurrentPartnerContext
+  );
+
+  const endChat = () => {
+    syncCurrentPartner({
+      newAvatarUrl: null,
+      newIsAi: false,
+      newName: null,
+      newUsername: null,
+    });
+  };
+
   return (
     <Container>
-      <Avatar src={avatarUrl} />
-      <Name>
-        {name} {isAi && <Label>AI</Label>}
-      </Name>
-      <Interactable>
+      <Avatar src={avatarUrl} isAi={isAi} />
+      <Name>{name}</Name>
+      <Interactable onClick={endChat}>
         <X size={'2rem'} />
       </Interactable>
     </Container>

@@ -2,6 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { Container as AvatarContainer } from '@/components/Avatar/styled-components';
+
 type Props = {
   children: React.ReactNode;
   // in the future, we could add more
@@ -18,6 +20,15 @@ const Container = styled.span`
   width: fit-content;
 
   padding: 2px 6px;
+
+  ${AvatarContainer} & {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+
+    transform: scale(0.825) translateX(15%);
+  }
 `;
 
 const Label = ({ children, theme = 'primary' }: Props) => {

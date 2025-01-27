@@ -11,6 +11,8 @@ const Container = styled.button`
   // reset button default style
   border: none;
   background: none;
+  margin: 0;
+  padding: 0;
 
   &:hover {
     cursor: pointer;

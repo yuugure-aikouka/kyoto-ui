@@ -1,10 +1,14 @@
 'use client';
 import React from 'react';
 import styled from 'styled-components';
+import Label from '@/components/Label';
+
+import { Container } from '@/components/Avatar/styled-components';
 
 type AvatarProps = {
   src: string;
   size?: 'large' | 'medium' | 'small';
+  isAi?: boolean;
 };
 
 const AVATAR_SIZES = {
@@ -14,20 +18,24 @@ const AVATAR_SIZES = {
 };
 
 const Img = styled.img`
-  height: var(--size);
-  aspect-ratio: 1;
+  display: block;
 `;
 
-const Avatar = ({ src, size = 'medium' }: AvatarProps) => {
+const Avatar = ({
+  src,
+  size = 'medium',
+  isAi = false,
+}: AvatarProps) => {
   return (
-    <Img
-      src={src}
+    <Container
       style={
         {
           '--size': AVATAR_SIZES[size],
         } as React.CSSProperties
-      }
-    />
+      }>
+      <Img src={src} />
+      {isAi && <Label>AI</Label>}
+    </Container>
   );
 };
 
