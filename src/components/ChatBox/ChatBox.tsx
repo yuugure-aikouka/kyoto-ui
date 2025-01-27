@@ -19,6 +19,7 @@ const Container = styled.div`
     flex: 1;
   }
 
+  // HACKY, todo: remove this when a better solution is found
   outline: 2px dashed var(--color-primary);
 `;
 
@@ -57,6 +58,7 @@ const DesktopInactiveChatBox = styled.div`
   place-content: center;
   width: 100%;
 
+  // HACKY, todo: remove this when a better solution is found
   outline: 2px dashed var(--color-primary);
 
   @media (max-width: ${768 / 16}rem) {
