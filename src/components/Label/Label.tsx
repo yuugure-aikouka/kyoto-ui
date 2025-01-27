@@ -12,9 +12,10 @@ const COLOR_MAPPER = {
   primary: '--color-primary',
 };
 
-const Container = styled.div`
+const Container = styled.span`
   border-radius: 6px;
   background-color: var(--color-primary);
+  width: fit-content;
 
   padding: 2px 6px;
 `;

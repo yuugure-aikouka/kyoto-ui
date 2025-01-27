@@ -17,11 +17,11 @@ const Container = styled.div`
 
   // it is guaranteed that this container will only contain 2 children
   & > *:first-child {
-    flex-grow: 2;
+    min-width: 20%;
   }
 
   & > *:last-child {
-    flex-grow: 8;
+    flex-grow: 1;
   }
 `;
 

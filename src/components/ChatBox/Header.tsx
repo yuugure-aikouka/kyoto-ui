@@ -17,10 +17,14 @@ type Props = {
 const Container = styled.section`
   display: flex;
   gap: 8px;
+  gap: clamp(8px, 4%, 16px);
   align-items: center;
 
   height: fit-content;
-  padding: 4px 16px;
+  padding-block: 8px;
+
+  padding-inline: 24px;
+  padding-inline: min(24px, 4%);
 
   & > *:last-child {
     margin-left: auto;
@@ -28,15 +32,16 @@ const Container = styled.section`
 `;
 
 const Name = styled.span`
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 `;
 
 const Header = ({ avatarUrl, name, isAi = false }: Props) => {
   return (
     <Container>
       <Avatar src={avatarUrl} />
-      <Name>{name}</Name>
-      {isAi && <Label>AI</Label>}
+      <Name>
+        {name} {isAi && <Label>AI</Label>}
+      </Name>
       <Interactable>
         <X size={'2rem'} />
       </Interactable>
