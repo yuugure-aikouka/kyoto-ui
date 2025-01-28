@@ -35,6 +35,8 @@ export const Container = styled.div`
   ${ChatBoxSection} & {
     margin-left: var(--left-margin);
     margin-right: var(--right-margin);
+
+    border-bottom-right-radius: 0px;
   }
 `;
 

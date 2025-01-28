@@ -24,7 +24,10 @@ const Container = styled.section`
   padding-block: 8px;
 
   padding-inline: 24px;
-  padding-inline: min(24px, 4%);
+  padding-inline-end: min(24px, 4%);
+  // to make it symmetrical visually
+  // see comment in PartnerPreviewChat.tsx:~32
+  padding-inline-start: min(12px, 2%);
 
   & > *:last-child {
     margin-left: auto;

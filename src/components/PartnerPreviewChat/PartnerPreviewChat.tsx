@@ -38,8 +38,8 @@ const PreviewContainer = styled.div`
 const ChatPreview = styled.section``;
 
 const Backdrop = styled.div`
-  background-color: black;
-  opacity: 0.2;
+  background-color: var(--color-text);
+  opacity: 0.15;
 
   width: 100%;
   height: 100%;

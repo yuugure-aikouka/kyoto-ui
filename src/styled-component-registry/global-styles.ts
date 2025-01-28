@@ -6,6 +6,8 @@ const GlobalStyles = createGlobalStyle`
     background-color: var(--color-background);
     color: var(--color-text);
 
+    transition: background-color ease-in-out 300ms, color ease-in-out 300ms;
+
     --laptop: 1024px;
     --tablet: 768px;
     --mobile: 425px;

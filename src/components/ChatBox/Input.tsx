@@ -23,7 +23,7 @@ const Form = styled.form`
   display: flex;
   align-items: center;
 
-  border: 2px solid hsl(0 0 5%);
+  border: 2px solid var(--color-text);
   border-radius: 24px;
 
   padding: 4px 16px;
@@ -36,6 +36,9 @@ const StyledInput = styled.input`
   height: 36px;
   outline: none;
   border: none;
+
+  background-color: var(--color-background);
+  color: var(--color-text);
 `;
 
 const Input = ({ onSubmit }: Props) => {

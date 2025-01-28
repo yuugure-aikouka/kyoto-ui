@@ -2,14 +2,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div`
-  width: 100vw;
+const ChatContainer = styled.div`
+  display: flex;
 
   // fallback for dvh incase it isn't supported
   height: 100vh;
   height: 100dvh;
-
-  display: flex;
 
   // it is guaranteed that this container will only contain 2 children
   & > *:first-child {
@@ -32,7 +30,7 @@ const Layout = ({
   // partner list (developed later) & chat room
   children: [React.ReactNode, React.ReactNode];
 }) => {
-  return <Container>{children}</Container>;
+  return <ChatContainer>{children}</ChatContainer>;
 };
 
 export default Layout;

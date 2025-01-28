@@ -16,6 +16,8 @@ const Layout = styled.div`
   // todo: remove / update this in the development ticket of partner list UI
   /* display: grid;
   place-content: center; */
+
+  padding-block: 16px;
 `;
 
 const PartnersContainer = styled.section`

@@ -21,8 +21,8 @@ export const DARK_COLORS = {
   '--color-text': 'hsl(0deg 0% 100%)',
   '--color-background': 'hsl(230deg 20% 8%)',
 
-  '--color-primary': 'hsl(45deg, 100%, 45%)',
-  '--color-secondary': 'hsl(0deg 0% 92%)',
+  '--color-primary': 'hsl(45deg, 100%, 40%)',
+  '--color-secondary': 'hsl(0deg 0% 45%)',
 
   '--color-info': 'hsl(213 100% 45%)',
 

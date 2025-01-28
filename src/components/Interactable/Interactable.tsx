@@ -13,6 +13,7 @@ const Container = styled.button`
   background: none;
   margin: 0;
   padding: 0;
+  color: inherit;
 
   &:hover {
     cursor: pointer;
