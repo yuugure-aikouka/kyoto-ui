@@ -15,6 +15,10 @@ const ChatContainer = styled.div`
     flex-shrink: 0;
 
     @media (max-width: ${768 / 16}rem) {
+      min-width: revert;
+    }
+
+    @media (max-width: ${425 / 16}rem) {
       display: none;
     }
   }
@@ -22,6 +26,9 @@ const ChatContainer = styled.div`
   & > *:last-child {
     flex-grow: 1;
   }
+
+  position: relative;
+  isolation: isolate;
 `;
 
 const Layout = ({

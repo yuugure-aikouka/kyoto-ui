@@ -18,9 +18,6 @@ const Container = styled.div`
   & > *:nth-child(2) {
     flex: 1;
   }
-
-  // HACKY, todo: remove this when a better solution is found
-  outline: 2px dashed var(--color-primary);
 `;
 
 const ActiveChatBox = ({ username }: { username: string }) => {
@@ -54,21 +51,22 @@ const ActiveChatBox = ({ username }: { username: string }) => {
 };
 
 const DesktopInactiveChatBox = styled.div`
+  overflow: hidden;
+
   display: grid;
   place-content: center;
   width: 100%;
 
-  // HACKY, todo: remove this when a better solution is found
-  outline: 2px dashed var(--color-primary);
-
-  @media (max-width: ${768 / 16}rem) {
+  @media (max-width: ${425 / 16}rem) {
     display: none;
   }
 `;
 
 const MobileInactiveChatBox = styled.div`
+  overflow: hidden;
+
   display: none;
-  @media (max-width: ${768 / 16}rem) {
+  @media (max-width: ${425 / 16}rem) {
     display: block;
     display: grid;
     place-content: center;

@@ -12,6 +12,7 @@ export type PartnerPreviewType = {
   displayName: string;
   username: string;
   lastChat: string;
+  forceShowChatPreview?: boolean;
 };
 
 const Container = styled.div`
@@ -28,14 +29,19 @@ const PreviewContainer = styled.div`
 
   gap: 16px;
 
-  padding-inline-start: 16px;
+  --base-inline-padding: 16px;
+  padding-inline-start: var(--base-inline-padding);
   // HACK: this property is to center the preview chat
   // currently, the default memoji avatars contain large paddings
   // todo: fix should be applied when we finally decided the avatar system
-  padding-inline-end: 48px;
+  padding-inline-end: calc(var(--base-inline-padding) * 1.5);
 `;
 
-const ChatPreview = styled.section``;
+const ResponsiveChatPreview = styled.section`
+  @media (max-width: ${768 / 16}rem) {
+    display: none;
+  }
+`;
 
 const Backdrop = styled.div`
   background-color: var(--color-text);
@@ -52,6 +58,7 @@ const PartnerPreviewChat = ({
   displayName,
   lastChat,
   username,
+  forceShowChatPreview = false,
 }: PartnerPreviewType) => {
   const { username: activePartnerUsername, syncCurrentPartner } =
     React.useContext(CurrentPartnerContext);
@@ -70,12 +77,24 @@ const PartnerPreviewChat = ({
         {username == activePartnerUsername && <Backdrop />}
         <PreviewContainer>
           <Avatar size="large" src={avatarSrc} isAi={isAi} />
-          <ChatPreview>
-            <p>
-              <strong>{displayName}</strong>
-            </p>
-            <p>{lastChat}</p>
-          </ChatPreview>
+
+          {!forceShowChatPreview && (
+            <ResponsiveChatPreview>
+              <p>
+                <strong>{displayName}</strong>
+              </p>
+              <p>{lastChat}</p>
+            </ResponsiveChatPreview>
+          )}
+
+          {forceShowChatPreview && (
+            <section>
+              <p>
+                <strong>{displayName}</strong>
+              </p>
+              <p>{lastChat}</p>
+            </section>
+          )}
         </PreviewContainer>
       </Container>
     </Interactable>
