@@ -9,7 +9,7 @@ export const post = async ({
   path: string;
   data?: object;
   callback?: (response: AxiosResponse) => void;
-  errorHandler?: (error: AxiosError) => void;
+  errorHandler?: (error: string) => void;
 }) => {
   return axios
     .post(path, data)
@@ -20,7 +20,11 @@ export const post = async ({
     })
     .catch((error: AxiosError) => {
       if (errorHandler) {
-        errorHandler(error);
+        errorHandler(
+          `something went wrong, please try again later. cause: ${JSON.stringify(
+            error.response?.data
+          )}`
+        );
       }
     });
 };

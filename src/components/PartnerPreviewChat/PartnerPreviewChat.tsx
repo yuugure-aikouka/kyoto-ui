@@ -5,6 +5,7 @@ import Avatar from '@/components/Avatar';
 import Interactable from '@/components/Interactable';
 
 import { CurrentPartnerContext } from '@/components/CurrentPartnerProvider';
+import { ChatEnablementContext } from '@/components/ChatLayout/ChatEnablementProvider';
 
 export type PartnerPreviewType = {
   avatarSrc: string;
@@ -35,10 +36,21 @@ const PreviewContainer = styled.div`
   // currently, the default memoji avatars contain large paddings
   // todo: fix should be applied when we finally decided the avatar system
   padding-inline-end: calc(var(--base-inline-padding) * 1.5);
+
+  & > *:first-child {
+    flex-shrink: 0;
+  }
+
+  & > *:last-child {
+    flex-shrink: 1;
+  }
 `;
 
 const ResponsiveChatPreview = styled.section`
-  @media (max-width: ${768 / 16}rem) {
+  // tablet only
+  // 48 rem = 768 / 16 -> tablet max size
+  // prettier just keep messing the lint if i calculate it programmatically (cause of auto newline)
+  @media (min-width: ${(425 + 1) / 16}rem) and (max-width: 48rem) {
     display: none;
   }
 `;
@@ -62,6 +74,7 @@ const PartnerPreviewChat = ({
 }: PartnerPreviewType) => {
   const { username: activePartnerUsername, syncCurrentPartner } =
     React.useContext(CurrentPartnerContext);
+  const { setIsChatActive } = React.useContext(ChatEnablementContext);
 
   return (
     <Interactable
@@ -72,6 +85,7 @@ const PartnerPreviewChat = ({
           newName: displayName,
           newUsername: username,
         });
+        setIsChatActive(true);
       }}>
       <Container>
         {username == activePartnerUsername && <Backdrop />}

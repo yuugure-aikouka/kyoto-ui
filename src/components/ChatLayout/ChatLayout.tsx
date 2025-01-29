@@ -2,6 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ChatEnablementProvider from '@/components/ChatLayout/ChatEnablementProvider';
+
 const ChatContainer = styled.div`
   display: flex;
 
@@ -27,8 +29,7 @@ const ChatContainer = styled.div`
     flex-grow: 1;
   }
 
-  position: relative;
-  isolation: isolate;
+  overflow-x: hidden;
 `;
 
 const Layout = ({
@@ -37,7 +38,11 @@ const Layout = ({
   // partner list (developed later) & chat room
   children: [React.ReactNode, React.ReactNode];
 }) => {
-  return <ChatContainer>{children}</ChatContainer>;
+  return (
+    <ChatEnablementProvider>
+      <ChatContainer>{children}</ChatContainer>
+    </ChatEnablementProvider>
+  );
 };
 
 export default Layout;

@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import ChatBubble from '@/components/ChatBubble';
 import TypingAnimation from '@/components/ChatBubble/TypingAnimation';
 
+import { ChatEnablementContext } from '@/components/ChatLayout/ChatEnablementProvider';
+
 import { Section } from '@/components/ChatBox/styled-components';
 import { epochToDate, epochToHour } from '@/utils/time';
 
@@ -46,14 +48,15 @@ const isNewDay = (
 };
 
 const ChatHistory = ({ chats = [], isPartnerTyping }: Props) => {
+  const { isChatActive } = React.useContext(ChatEnablementContext);
   const messagesEndRef = React.useRef<null | HTMLDivElement>(null);
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   React.useEffect(() => {
-    scrollToBottom();
-  }, [chats]);
+    if (!isChatActive) {
+      return;
+    }
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chats, isChatActive]);
 
   return (
     <Section>

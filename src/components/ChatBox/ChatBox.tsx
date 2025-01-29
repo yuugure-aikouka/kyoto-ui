@@ -10,21 +10,37 @@ import PartnerList from '@/components/PartnerList';
 
 import { CurrentPartnerContext } from '@/components/CurrentPartnerProvider';
 import { PartnerPreviewListType } from '@/components/PartnerList';
+import { ChatEnablementContext } from '@/components/ChatLayout/ChatEnablementProvider';
+import { Section as ChatHistorySection } from '@/components/ChatBox/styled-components';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  & > *:nth-child(2) {
+  & > ${ChatHistorySection} {
     flex: 1;
   }
+
+  position: relative;
+  isolation: isolate;
+`;
+
+const Backdrop = styled.div`
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  backdrop-filter: blur(2px);
 `;
 
 const ActiveChatBox = ({ username }: { username: string }) => {
   const { data, actions } = useChatData(username);
+  const { isChatActive } = React.useContext(ChatEnablementContext);
 
   return (
     <Container>
+      {!isChatActive && <Backdrop />}
       <Header
         avatarUrl={data.avatarUrl}
         name={data.name}
@@ -60,6 +76,9 @@ const DesktopInactiveChatBox = styled.div`
   @media (max-width: ${425 / 16}rem) {
     display: none;
   }
+
+  position: relative;
+  isolation: isolate;
 `;
 
 const MobileInactiveChatBox = styled.div`
@@ -72,17 +91,23 @@ const MobileInactiveChatBox = styled.div`
     place-content: center;
     width: 100%;
   }
+
+  position: relative;
+  isolation: isolate;
 `;
 
 // todo: refactor
 const InactiveChatBox = ({ partners }: PartnerPreviewListType) => {
+  const { isChatActive } = React.useContext(ChatEnablementContext);
+
   return (
     <>
       <DesktopInactiveChatBox>
+        {!isChatActive && <Backdrop />}
         start a chat with someone!
       </DesktopInactiveChatBox>
       <MobileInactiveChatBox>
-        <PartnerList partners={partners} />
+        <PartnerList isMobile={true} partners={partners} />
       </MobileInactiveChatBox>
     </>
   );

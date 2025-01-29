@@ -98,6 +98,10 @@ const useChatData = (username: string) => {
         addNewChat(response.data?.data, false);
         setIsPartnerTyping(false);
       },
+      errorHandler: (error: string) => {
+        addNewChat(error, false);
+        setIsPartnerTyping(false);
+      },
     });
   };
 

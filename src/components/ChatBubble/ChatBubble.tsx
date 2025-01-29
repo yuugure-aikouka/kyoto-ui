@@ -41,6 +41,7 @@ export const Container = styled.div`
 `;
 
 const Content = styled.p`
+  word-break: break-all;
   hyphens: auto;
   -webkit-hyphens: auto;
 `;

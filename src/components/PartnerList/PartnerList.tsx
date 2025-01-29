@@ -1,33 +1,30 @@
 'use client';
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 import PartnerPreviewChat, {
   PartnerPreviewType,
 } from '@/components/PartnerPreviewChat';
 import Interactable from '@/components/Interactable';
+import ThemeToggle from '@/components/ThemeToggle';
 import BREAKPOINTS_IN_PIXEL from '@/const/BREAKPOINTS';
 
-import { ChevronRight } from 'react-feather';
+import { ChevronRight, ChevronLeft } from 'react-feather';
+import { ChatEnablementContext } from '@/components/ChatLayout/ChatEnablementProvider';
 
 export type PartnerPreviewListType = {
   partners: PartnerPreviewType[];
+  isMobile?: boolean;
 };
 
 const Layout = styled.div`
   overflow-y: auto;
-  padding-block: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 
   background-color: var(--color-background);
   border-right: 2px dashed var(--color-secondary);
-
-  position: var(--position);
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-
-  opacity: var(--opacity);
-  pointer-events: var(--pointer-events);
 `;
 
 const PartnersContainer = styled.section`
@@ -35,45 +32,58 @@ const PartnersContainer = styled.section`
   flex-direction: column;
 
   gap: 8px;
-`;
 
-const BlurIn = keyframes`
-  0% {
-    backdrop-filter: blur(0px);
-  }
-  100% {
-    backdrop-filter: blur(2px);
+  @media (max-width: ${425 / 16}rem) {
+    // 2px came from layout's border-right
+    width: calc(100vw - 2px);
   }
 `;
 
-const Backdrop = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
+const OptionSection = styled.section`
+  position: sticky;
+  top: 0;
   z-index: 1;
 
-  animation: ${BlurIn} both 300ms;
+  border-bottom: 2px dashed var(--color-secondary);
+  background-color: var(--color-background);
+
+  display: flex;
+  align-items: center;
+
+  padding: 24px;
+
+  & > *:first-child {
+    margin-right: auto;
+  }
 `;
 
-const ExpandButton = styled.div`
-  width: fit-content;
-  position: sticky;
-  right: 0;
-  /* top: 0; */
-  /* bottom: 0; */
+const ToggleExpand = styled.div`
+  display: none;
+
+  // tablet only
+  // 48 rem = 768 / 16 -> tablet max size
+  // prettier just keep messing the lint if i calculate it programmatically (cause of auto newline)
+  @media (min-width: ${(425 + 1) / 16}rem) and (max-width: 48rem) {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const useMobileResponsiveness = (): [
   showDetail: boolean,
   toggleShowDetail: () => void
 ] => {
-  // mobile only state
-  const [showDetail, setShowDetail] = React.useState(false);
+  const { isChatActive, setIsChatActive } = React.useContext(
+    ChatEnablementContext
+  );
 
   React.useEffect(() => {
     const handleResize = (): void => {
       if (window.innerWidth > BREAKPOINTS_IN_PIXEL.tablet) {
-        setShowDetail(false);
+        setIsChatActive(true);
+      }
+      if (window.innerWidth <= BREAKPOINTS_IN_PIXEL.mobile) {
+        setIsChatActive(true);
       }
     };
 
@@ -82,15 +92,13 @@ const useMobileResponsiveness = (): [
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [setIsChatActive]);
 
   const toggleShowDetail = () => {
-    setShowDetail((currentShowDetail) => {
-      return !currentShowDetail;
-    });
+    setIsChatActive(!isChatActive);
   };
 
-  return [showDetail, toggleShowDetail];
+  return [!isChatActive, toggleShowDetail];
 };
 
 function PartnerList({ partners }: PartnerPreviewListType) {
@@ -98,61 +106,35 @@ function PartnerList({ partners }: PartnerPreviewListType) {
   const [showDetail, toggleShowDetail] = useMobileResponsiveness();
 
   return (
-    <>
-      {showDetail && (
-        <>
-          <Backdrop />
-          <Layout
-            style={
-              {
-                '--position': 'absolute',
-              } as React.CSSProperties
-            }>
-            <ExpandButton>
-              <Interactable onClick={toggleShowDetail}>
-                <ChevronRight />
-              </Interactable>
-            </ExpandButton>
-            <PartnersContainer>
-              {partners.map((partnerPreview) => {
-                return (
-                  <PartnerPreviewChat
-                    key={crypto.randomUUID()}
-                    forceShowChatPreview={showDetail}
-                    {...partnerPreview}
-                  />
-                );
-              })}
-            </PartnersContainer>
-          </Layout>
-        </>
-      )}
+    <Layout>
+      <OptionSection>
+        <ThemeToggle />
 
-      <Layout
-        style={
-          {
-            '--position': 'relative',
-            '--opacity': showDetail ? 0 : 1,
-            '--pointer-events': showDetail ? 'none' : 'initial',
-          } as React.CSSProperties
-        }>
-        <ExpandButton>
+        <ToggleExpand>
           <Interactable onClick={toggleShowDetail}>
-            <ChevronRight />
+            {!showDetail ? <ChevronRight /> : <ChevronLeft />}
           </Interactable>
-        </ExpandButton>
-        <PartnersContainer>
-          {partners.map((partnerPreview) => {
-            return (
-              <PartnerPreviewChat
-                key={crypto.randomUUID()}
-                {...partnerPreview}
-              />
-            );
-          })}
-        </PartnersContainer>
-      </Layout>
-    </>
+        </ToggleExpand>
+      </OptionSection>
+
+      <PartnersContainer
+      // style={
+      //   {
+      //     '--width': isMobile ? '100vw' : 'initial',
+      //   } as React.CSSProperties
+      // }
+      >
+        {partners.map((partnerPreview) => {
+          return (
+            <PartnerPreviewChat
+              forceShowChatPreview={showDetail}
+              key={crypto.randomUUID()}
+              {...partnerPreview}
+            />
+          );
+        })}
+      </PartnersContainer>
+    </Layout>
   );
 }
 
