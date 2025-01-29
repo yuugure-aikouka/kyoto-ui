@@ -13,7 +13,9 @@ type Props = {
 
 const Container = styled.section`
   /* outline: 2px dashed black; */
-  padding: 12px 24px;
+  padding-block: 12px;
+  padding-inline: 24px;
+  padding-inline: min(24px, 4%);
   /* overflow: visible; */
 `;
 
