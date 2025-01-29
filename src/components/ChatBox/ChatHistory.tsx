@@ -82,7 +82,7 @@ const ChatHistory = ({ chats = [], isPartnerTyping }: Props) => {
           );
         }
       )}
-      {!isPartnerTyping && (
+      {isPartnerTyping && (
         <ChatBubble sender="them">
           <TypingAnimation />
         </ChatBubble>
