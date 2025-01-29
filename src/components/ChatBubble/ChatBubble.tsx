@@ -25,6 +25,16 @@ const MARGIN_RIGHT_MAPPER = {
   them: 'auto',
 };
 
+const BORDER_BOTTOM_RIGHT_RADIUS_MAPPER = {
+  me: '0',
+  them: '8px',
+};
+
+const BORDER_BOTTOM_LEFT_RADIUS_MAPPER = {
+  me: '8px',
+  them: '0',
+};
+
 export const Container = styled.div`
   width: fit-content;
   background-color: var(--bubble-color);
@@ -36,7 +46,8 @@ export const Container = styled.div`
     margin-left: var(--left-margin);
     margin-right: var(--right-margin);
 
-    border-bottom-right-radius: 0px;
+    border-bottom-right-radius: var(--border-bottom-right-radius);
+    border-bottom-left-radius: var(--border-bottom-left-radius);
   }
 `;
 
@@ -54,6 +65,10 @@ const ChatBubble = ({ children, sender }: Props) => {
           '--bubble-color': COLOR_MAPPER[sender],
           '--left-margin': MARGIN_LEFT_MAPPER[sender],
           '--right-margin': MARGIN_RIGHT_MAPPER[sender],
+          '--border-bottom-right-radius':
+            BORDER_BOTTOM_RIGHT_RADIUS_MAPPER[sender],
+          '--border-bottom-left-radius':
+            BORDER_BOTTOM_LEFT_RADIUS_MAPPER[sender],
         } as React.CSSProperties
       }>
       <Content>{children}</Content>
