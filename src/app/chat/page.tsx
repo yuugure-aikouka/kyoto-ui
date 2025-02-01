@@ -2,6 +2,7 @@ import ChatLayout from '@/components/ChatLayout/ChatLayout';
 import PartnerList from '@/components/PartnerList';
 import ChatBox from '@/components/ChatBox';
 import CurrentPartnerProvider from '@/contexts/CurrentPartnerProvider';
+import ChatEnablementProvider from '@/contexts/ChatEnablementProvider';
 
 import { getPartnerList } from '@/mocks/partner';
 import { PartnerPreviewType } from '@/components/PartnerPreviewChat';
@@ -35,10 +36,12 @@ const Page = () => {
 
   return (
     <CurrentPartnerProvider>
-      <ChatLayout>
-        <PartnerList partners={partnerList} />
-        <ChatBox partners={partnerList} />
-      </ChatLayout>
+      <ChatEnablementProvider>
+        <ChatLayout>
+          <PartnerList partners={partnerList} />
+          <ChatBox />
+        </ChatLayout>
+      </ChatEnablementProvider>
     </CurrentPartnerProvider>
   );
 };

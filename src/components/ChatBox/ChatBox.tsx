@@ -6,11 +6,9 @@ import Header from '@/components/ChatBox/Header';
 import ChatHistory from '@/components/ChatBox/ChatHistory';
 import Input from '@/components/ChatBox/Input';
 import useChatData from '@/hooks/useChatData';
-import PartnerList from '@/components/PartnerList';
 
 import { CurrentPartnerContext } from '@/contexts/CurrentPartnerProvider';
-import { PartnerPreviewListType } from '@/components/PartnerList';
-import { ChatEnablementContext } from '@/contexts/ChatEnablementProvider/ChatEnablementProvider';
+import { ChatEnablementContext } from '@/contexts/ChatEnablementProvider';
 import { Section as ChatHistorySection } from '@/components/ChatBox/styled-components';
 
 const Container = styled.div`
@@ -73,51 +71,26 @@ const DesktopInactiveChatBox = styled.div`
   place-content: center;
   width: 100%;
 
-  @media (max-width: ${425 / 16}rem) {
-    display: none;
-  }
-
   position: relative;
   isolation: isolate;
 `;
 
-const MobileInactiveChatBox = styled.div`
-  overflow: hidden;
-
-  display: none;
-  @media (max-width: ${425 / 16}rem) {
-    display: block;
-    display: grid;
-    place-content: center;
-    width: 100%;
-  }
-
-  position: relative;
-  isolation: isolate;
-`;
-
-// todo: refactor
-const InactiveChatBox = ({ partners }: PartnerPreviewListType) => {
+const InactiveChatBox = () => {
   const { isChatActive } = React.useContext(ChatEnablementContext);
 
   return (
-    <>
-      <DesktopInactiveChatBox>
-        {!isChatActive && <Backdrop />}
-        start a chat with someone!
-      </DesktopInactiveChatBox>
-      <MobileInactiveChatBox>
-        <PartnerList isMobile={true} partners={partners} />
-      </MobileInactiveChatBox>
-    </>
+    <DesktopInactiveChatBox>
+      {!isChatActive && <Backdrop />}
+      start a chat with someone!
+    </DesktopInactiveChatBox>
   );
 };
 
-const ChatBox = ({ partners }: PartnerPreviewListType) => {
+const ChatBox = () => {
   const { username } = React.useContext(CurrentPartnerContext);
 
   if (!username) {
-    return <InactiveChatBox partners={partners} />;
+    return <InactiveChatBox />;
   }
 
   return <ActiveChatBox key={username} username={username} />;

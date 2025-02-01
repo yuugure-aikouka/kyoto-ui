@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ChatEnablementProvider from '@/contexts/ChatEnablementProvider';
+import { CurrentPartnerContext } from '@/contexts/CurrentPartnerProvider';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const ChatContainer = styled.div`
     }
 
     @media (max-width: ${425 / 16}rem) {
-      display: none;
+      display: var(--partner-list-display);
     }
   }
 
@@ -38,10 +38,17 @@ const Layout = ({
   // partner list (developed later) & chat room
   children: [React.ReactNode, React.ReactNode];
 }) => {
+  const { username } = React.useContext(CurrentPartnerContext);
+
   return (
-    <ChatEnablementProvider>
-      <ChatContainer>{children}</ChatContainer>
-    </ChatEnablementProvider>
+    <ChatContainer
+      style={
+        {
+          '--partner-list-display': username ? 'none' : 'flex',
+        } as React.CSSProperties
+      }>
+      {children}
+    </ChatContainer>
   );
 };
 
