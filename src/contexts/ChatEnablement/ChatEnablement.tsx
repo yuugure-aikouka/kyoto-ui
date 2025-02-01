@@ -17,7 +17,7 @@ export const ChatEnablementContext = React.createContext({
   },
 } as ChatEnablementContextType);
 
-const ChatEnablementProvider = ({ children }: Props) => {
+export const ChatEnablementProvider = ({ children }: Props) => {
   const [isChatActive, setIsChatActive] =
     React.useState<boolean>(true);
 
@@ -27,5 +27,3 @@ const ChatEnablementProvider = ({ children }: Props) => {
     </ChatEnablementContext>
   );
 };
-
-export default ChatEnablementProvider;

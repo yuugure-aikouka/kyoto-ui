@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import ChatBubble from '@/components/ChatBubble';
 import TypingAnimation from '@/components/ChatBubble/TypingAnimation';
 
-import { ChatEnablementContext } from '@/contexts/ChatEnablementProvider/ChatEnablementProvider';
+import { ChatEnablementContext } from '@/contexts/ChatEnablement/ChatEnablement';
 
 import { Section } from '@/components/ChatBox/styled-components';
 import { epochToDate, epochToHour } from '@/utils/time';

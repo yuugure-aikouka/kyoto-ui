@@ -19,7 +19,7 @@ export const ThemeContext = React.createContext({
   toggleTheme: () => {},
 } as ThemeContextType);
 
-const ThemeProvider = ({ initialTheme, children }: Props) => {
+export const ThemeProvider = ({ initialTheme, children }: Props) => {
   const [theme, setTheme] = React.useState<string>(initialTheme);
 
   const toggleTheme = () => {
@@ -47,5 +47,3 @@ const ThemeProvider = ({ initialTheme, children }: Props) => {
     </ThemeContext>
   );
 };
-
-export default ThemeProvider;

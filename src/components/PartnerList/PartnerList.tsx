@@ -10,7 +10,7 @@ import ThemeToggle from '@/components/ThemeToggle';
 import BREAKPOINTS_IN_PIXEL from '@/const/BREAKPOINTS';
 
 import { ChevronRight, ChevronLeft } from 'react-feather';
-import { ChatEnablementContext } from '@/contexts/ChatEnablementProvider/ChatEnablementProvider';
+import { ChatEnablementContext } from '@/contexts/ChatEnablement/ChatEnablement';
 
 export type PartnerPreviewListType = {
   partners: PartnerPreviewType[];

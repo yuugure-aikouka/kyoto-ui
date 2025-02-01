@@ -8,7 +8,7 @@ import Input from '@/components/ChatBox/Input';
 import useChatData from '@/hooks/useChatData';
 
 import { CurrentPartnerContext } from '@/contexts/CurrentPartnerProvider';
-import { ChatEnablementContext } from '@/contexts/ChatEnablementProvider';
+import { ChatEnablementContext } from '@/contexts/ChatEnablement';
 import { Section as ChatHistorySection } from '@/components/ChatBox/styled-components';
 
 const Container = styled.div`

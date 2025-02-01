@@ -30,7 +30,7 @@ export const CurrentPartnerContext = React.createContext({
   syncCurrentPartner: () => {},
 } as CurrentPartnerType);
 
-const CurrentPartnerProvider = ({ children }: Props) => {
+export const CurrentPartnerProvider = ({ children }: Props) => {
   const [name, setName] = React.useState<string | null>(null);
   const [username, setUsername] = React.useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = React.useState<string | null>(
@@ -52,5 +52,3 @@ const CurrentPartnerProvider = ({ children }: Props) => {
     </CurrentPartnerContext>
   );
 };
-
-export default CurrentPartnerProvider;

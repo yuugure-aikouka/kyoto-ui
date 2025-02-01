@@ -5,7 +5,7 @@ import Avatar from '@/components/Avatar';
 import Interactable from '@/components/Interactable';
 
 import { CurrentPartnerContext } from '@/contexts/CurrentPartnerProvider';
-import { ChatEnablementContext } from '@/contexts/ChatEnablementProvider/ChatEnablementProvider';
+import { ChatEnablementContext } from '@/contexts/ChatEnablement/ChatEnablement';
 
 export type PartnerPreviewType = {
   avatarSrc: string;

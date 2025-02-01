@@ -1,8 +1,8 @@
 import ChatLayout from '@/components/ChatLayout/ChatLayout';
 import PartnerList from '@/components/PartnerList';
 import ChatBox from '@/components/ChatBox';
-import CurrentPartnerProvider from '@/contexts/CurrentPartnerProvider';
-import ChatEnablementProvider from '@/contexts/ChatEnablementProvider';
+import { CurrentPartnerProvider } from '@/contexts/CurrentPartnerProvider';
+import { ChatEnablementProvider } from '@/contexts/ChatEnablement';
 
 import { getPartnerList } from '@/mocks/partner';
 import { PartnerPreviewType } from '@/components/PartnerPreviewChat';
