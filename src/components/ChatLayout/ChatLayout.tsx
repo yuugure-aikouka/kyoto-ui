@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ChatEnablementProvider from '@/components/ChatLayout/ChatEnablementProvider';
+import ChatEnablementProvider from '@/contexts/ChatEnablementProvider';
 
 const ChatContainer = styled.div`
   display: flex;

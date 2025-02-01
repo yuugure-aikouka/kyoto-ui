@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Avatar from '@/components/Avatar';
 import Interactable from '@/components/Interactable';
 
-import { CurrentPartnerContext } from '@/components/CurrentPartnerProvider';
+import { CurrentPartnerContext } from '@/contexts/CurrentPartnerProvider';
 import { X } from 'react-feather';
 
 type Props = {

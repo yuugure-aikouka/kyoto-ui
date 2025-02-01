@@ -1,13 +1,11 @@
 'use client';
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import Cookie from 'js-cookie';
-
 import Interactable from '@/components/Interactable';
 
 import { Moon, Sun } from 'react-feather';
-import { LIGHT_COLORS, DARK_COLORS } from '@/const/COLORS';
-import { ThemeContext } from '@/components/ThemeProvider';
+
+import { ThemeContext } from '@/contexts/ThemeProvider';
 
 const RotatingKeyframe = keyframes`
   0% {
@@ -41,38 +39,24 @@ const AnimatedMoon = styled(Moon)<IconProps>`
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = React.useContext(ThemeContext);
-
-  const handleClick = () => {
-    const nextTheme = theme === 'light' ? 'dark' : 'light';
-    toggleTheme();
-
-    Cookie.set('color-theme', nextTheme, {
-      expires: 1000,
-    });
-
-    // HACK: we're interfering with element outside of react directly.
-    // sadly, there's nothing we can do, it is what it is
-    const root = document.documentElement;
-    const colors = nextTheme === 'light' ? LIGHT_COLORS : DARK_COLORS;
-    root.setAttribute('data-color-theme', nextTheme);
-
-    Object.entries(colors).forEach(([key, value]) => {
-      root.style.setProperty(key, value);
-    });
-  };
-
   const [hasSwitched, setHasSwitched] = React.useState(false);
 
   return (
     <Interactable
       onClick={() => {
-        handleClick();
+        toggleTheme();
         setHasSwitched(true);
       }}>
       {theme === 'light' ? (
-        <AnimatedSun $hasSwitched={hasSwitched} size="22px" />
+        <AnimatedSun
+          $hasSwitched={hasSwitched}
+          size={`${22 / 16}rem`}
+        />
       ) : (
-        <AnimatedMoon $hasSwitched={hasSwitched} size="22px" />
+        <AnimatedMoon
+          $hasSwitched={hasSwitched}
+          size={`${22 / 16}rem`}
+        />
       )}
     </Interactable>
   );

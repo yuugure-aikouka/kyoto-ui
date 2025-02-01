@@ -19,6 +19,7 @@ const AVATAR_SIZES = {
 
 const Img = styled.img`
   display: block;
+  position: relative;
 `;
 
 const Avatar = ({
@@ -33,8 +34,8 @@ const Avatar = ({
           '--size': AVATAR_SIZES[size],
         } as React.CSSProperties
       }>
-      <Img src={src} />
       {isAi && <Label>AI</Label>}
+      <Img src={src} />
     </Container>
   );
 };

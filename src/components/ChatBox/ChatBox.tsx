@@ -8,9 +8,9 @@ import Input from '@/components/ChatBox/Input';
 import useChatData from '@/hooks/useChatData';
 import PartnerList from '@/components/PartnerList';
 
-import { CurrentPartnerContext } from '@/components/CurrentPartnerProvider';
+import { CurrentPartnerContext } from '@/contexts/CurrentPartnerProvider';
 import { PartnerPreviewListType } from '@/components/PartnerList';
-import { ChatEnablementContext } from '@/components/ChatLayout/ChatEnablementProvider';
+import { ChatEnablementContext } from '@/contexts/ChatEnablementProvider/ChatEnablementProvider';
 import { Section as ChatHistorySection } from '@/components/ChatBox/styled-components';
 
 const Container = styled.div`

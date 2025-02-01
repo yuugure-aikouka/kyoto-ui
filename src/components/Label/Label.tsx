@@ -23,7 +23,6 @@ const Container = styled.span`
 
   ${AvatarContainer} & {
     position: absolute;
-    z-index: -1;
     top: 0;
     right: 0;
 

@@ -10,11 +10,10 @@ import ThemeToggle from '@/components/ThemeToggle';
 import BREAKPOINTS_IN_PIXEL from '@/const/BREAKPOINTS';
 
 import { ChevronRight, ChevronLeft } from 'react-feather';
-import { ChatEnablementContext } from '@/components/ChatLayout/ChatEnablementProvider';
+import { ChatEnablementContext } from '@/contexts/ChatEnablementProvider/ChatEnablementProvider';
 
 export type PartnerPreviewListType = {
   partners: PartnerPreviewType[];
-  isMobile?: boolean;
 };
 
 const Layout = styled.div`
@@ -117,13 +116,7 @@ function PartnerList({ partners }: PartnerPreviewListType) {
         </ToggleExpand>
       </OptionSection>
 
-      <PartnersContainer
-      // style={
-      //   {
-      //     '--width': isMobile ? '100vw' : 'initial',
-      //   } as React.CSSProperties
-      // }
-      >
+      <PartnersContainer>
         {partners.map((partnerPreview) => {
           return (
             <PartnerPreviewChat
