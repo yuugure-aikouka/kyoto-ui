@@ -3,9 +3,8 @@ import '@/app/globals.css';
 import StyledComponentsRegistry from '@/styled-component-registry/registry';
 import GlobalStyles from '@/styled-component-registry/global-styles';
 
-// todo: create a dark-mode functionality
-import { LIGHT_COLORS } from '@/const/COLORS';
-
+import { ThemeProvider } from '@/contexts/Theme';
+import { getThemePreference } from '@/utils/theme';
 import { Funnel_Display } from 'next/font/google';
 import type { Metadata } from 'next';
 
@@ -18,17 +17,21 @@ export const metadata: Metadata = {
   title: 'mateify',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [theme, themeColors] = await getThemePreference();
+
   return (
-    <html lang="en" style={LIGHT_COLORS as React.CSSProperties}>
+    <html lang="en" style={themeColors as React.CSSProperties}>
       <body className={defaultFont.className}>
         <StyledComponentsRegistry>
-          {children}
-          <GlobalStyles />
+          <ThemeProvider initialTheme={theme}>
+            {children}
+            <GlobalStyles />
+          </ThemeProvider>
         </StyledComponentsRegistry>
       </body>
     </html>

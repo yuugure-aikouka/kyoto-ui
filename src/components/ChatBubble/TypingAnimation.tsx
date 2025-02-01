@@ -25,10 +25,13 @@ const Container = styled.span`
 
 const Waiting = keyframes`
   0% {
-    transform: translateY(-100%);
+    transform: translateY(0%);
   }
-  50% {
-    transform: translateY(100%);
+  25% {
+    transform: translateY(50%);
+  }
+  75% {
+    transform: translateY(-100%);
   }
   100% {
     transform: translateY(0%);

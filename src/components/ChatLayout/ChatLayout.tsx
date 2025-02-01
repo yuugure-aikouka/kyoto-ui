@@ -2,27 +2,34 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import useIsMobile from '@/hooks/useIsMobile';
+import { CurrentPartnerContext } from '@/contexts/CurrentPartner';
 
-import BREAKPOINTS_IN_PIXEL from '@/const/BREAKPOINTS';
-
-const Container = styled.div`
-  width: 100vw;
+const ChatContainer = styled.div`
+  display: flex;
 
   // fallback for dvh incase it isn't supported
   height: 100vh;
   height: 100dvh;
 
-  display: flex;
-
   // it is guaranteed that this container will only contain 2 children
   & > *:first-child {
     min-width: 20%;
+    flex-shrink: 0;
+
+    @media (max-width: ${768 / 16}rem) {
+      min-width: revert;
+    }
+
+    @media (max-width: ${425 / 16}rem) {
+      display: var(--partner-list-display);
+    }
   }
 
   & > *:last-child {
     flex-grow: 1;
   }
+
+  overflow-x: hidden;
 `;
 
 const Layout = ({
@@ -31,19 +38,17 @@ const Layout = ({
   // partner list (developed later) & chat room
   children: [React.ReactNode, React.ReactNode];
 }) => {
-  // potentially cause a lot of re-render
-  // todo: fix it by not using react state (via useIsMobile hook) / handle the resizing event by CSS query (will be very hacky) / or apply useMemo & useCallback on the children components (should we really?)
-  // or just let it be? on normal circumstances, user ain't resizing their screen
-  const isMobile = useIsMobile(BREAKPOINTS_IN_PIXEL.tablet);
+  const { username } = React.useContext(CurrentPartnerContext);
 
   return (
-    <Container>
-      {/* todo: handle so that we can still open this first children in mobile */}
-      {/* should be developed on `partner list` issue/ticket */}
-      {/* todo: currently, there's a flicker when user first open the page */}
-      {!isMobile && children[0]}
-      {children[1]}
-    </Container>
+    <ChatContainer
+      style={
+        {
+          '--partner-list-display': username ? 'none' : 'flex',
+        } as React.CSSProperties
+      }>
+      {children}
+    </ChatContainer>
   );
 };
 

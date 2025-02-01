@@ -5,131 +5,95 @@ import styled from 'styled-components';
 import Header from '@/components/ChatBox/Header';
 import ChatHistory from '@/components/ChatBox/ChatHistory';
 import Input from '@/components/ChatBox/Input';
-import PATHS from '@/const/PATHS';
+import useChatData from '@/hooks/useChatData';
 
-import { post } from '@/network';
-import { Chat } from '@/components/ChatBox/ChatHistory';
-import { getChat } from '@/mocks/chat';
+import { CurrentPartnerContext } from '@/contexts/CurrentPartner';
+import { ChatEnablementContext } from '@/contexts/ChatEnablement';
+import { Section as ChatHistorySection } from '@/components/ChatBox/styled-components';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  & > *:nth-child(2) {
+  & > ${ChatHistorySection} {
     flex: 1;
   }
+
+  position: relative;
+  isolation: isolate;
 `;
 
-const formatHistory = ({
-  chat_id,
-  is_my_chat,
-  content,
-  timestamp,
-}: {
-  chat_id: string;
-  content: string;
-  is_my_chat: boolean;
-  timestamp: number;
-}): Chat => {
-  return {
-    chatId: chat_id,
-    content,
-    timestamp,
-    isMyChat: is_my_chat,
-  };
-};
+const Backdrop = styled.div`
+  position: absolute;
+  inset: 0;
 
-const fetchChatData = (): {
-  avatarUrl: string;
-  name: string;
-  isAi: boolean;
-  history: Chat[];
-} => {
-  const { avatar_url, display_name, is_ai, history } = getChat();
+  z-index: 1;
 
-  return {
-    avatarUrl: avatar_url,
-    name: display_name,
-    isAi: is_ai,
-    history: history.map((entry) => formatHistory(entry)),
-  };
-};
+  backdrop-filter: blur(2px);
+`;
 
-const chatToDialog = (chatHistory: Chat[]): string[] => {
-  return chatHistory.map(({ isMyChat, content }) => {
-    return JSON.stringify({
-      them: isMyChat ? content : undefined,
-      you: !isMyChat ? content : undefined,
-    });
-  });
-};
-
-const ChatBox = () => {
-  const { avatarUrl, name, isAi, history } = fetchChatData();
-  const [chatHistory, setChatHistory] =
-    React.useState<Chat[]>(history);
-  const [isPartnerTyping, setIsPartnerTyping] = React.useState(false);
-
-  const addNewChat = (
-    content: string,
-    isMyChat: boolean = true
-  ): void => {
-    setChatHistory((previousChatHistory) => {
-      const newChatHistory = [...previousChatHistory];
-      newChatHistory.push({
-        chatId: crypto.randomUUID(),
-        content,
-        timestamp: Date.now(),
-        isMyChat,
-      });
-
-      return newChatHistory;
-    });
-  };
-
-  const getPartnerResponse = (content: string): void => {
-    setIsPartnerTyping(true);
-
-    const data = {
-      message: content,
-      history: chatToDialog(
-        chatHistory.slice(
-          Math.max(0, chatHistory.length - 25),
-          chatHistory.length
-        )
-      ),
-    };
-    post({
-      path: PATHS.chat_gemini,
-      data,
-      callback: (response) => {
-        addNewChat(response.data?.data, false);
-        setIsPartnerTyping(false);
-      },
-    });
-  };
+const ActiveChatBox = ({ username }: { username: string }) => {
+  const { data, actions } = useChatData(username);
+  const { isChatActive } = React.useContext(ChatEnablementContext);
 
   return (
     <Container>
-      <Header avatarUrl={avatarUrl} name={name} isAi={isAi} />
+      {!isChatActive && <Backdrop />}
+      <Header
+        avatarUrl={data.avatarUrl}
+        name={data.name}
+        isAi={data.isAi}
+      />
 
       <ChatHistory
-        isPartnerTyping={isPartnerTyping}
-        chats={chatHistory}
+        isPartnerTyping={data.isPartnerTyping}
+        chats={data.history}
       />
 
       <Input
         onSubmit={(chat: string) => {
-          addNewChat(chat);
+          actions.addNewChat(chat);
 
           // todo: in the future, below AI (incoming chat) listener should be placed in a backend server
-          if (!isAi) return;
+          if (!data.isAi) return;
 
-          getPartnerResponse(chat);
+          actions.getPartnerResponse(chat);
         }}
       />
     </Container>
   );
+};
+
+const DesktopInactiveChatBox = styled.div`
+  overflow: hidden;
+
+  display: grid;
+  place-content: center;
+  width: 100%;
+
+  position: relative;
+  isolation: isolate;
+`;
+
+const InactiveChatBox = () => {
+  const { isChatActive } = React.useContext(ChatEnablementContext);
+
+  return (
+    <DesktopInactiveChatBox>
+      {!isChatActive && <Backdrop />}
+      start a chat with someone!
+    </DesktopInactiveChatBox>
+  );
+};
+
+const ChatBox = () => {
+  const { username } = React.useContext(CurrentPartnerContext);
+
+  if (!username) {
+    return <InactiveChatBox />;
+  }
+
+  return <ActiveChatBox key={username} username={username} />;
 };
 
 export default ChatBox;
