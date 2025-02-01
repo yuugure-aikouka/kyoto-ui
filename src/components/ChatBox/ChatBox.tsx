@@ -7,7 +7,7 @@ import ChatHistory from '@/components/ChatBox/ChatHistory';
 import Input from '@/components/ChatBox/Input';
 import useChatData from '@/hooks/useChatData';
 
-import { CurrentPartnerContext } from '@/contexts/CurrentPartnerProvider';
+import { CurrentPartnerContext } from '@/contexts/CurrentPartner';
 import { ChatEnablementContext } from '@/contexts/ChatEnablement';
 import { Section as ChatHistorySection } from '@/components/ChatBox/styled-components';
 

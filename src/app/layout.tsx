@@ -3,7 +3,7 @@ import '@/app/globals.css';
 import StyledComponentsRegistry from '@/styled-component-registry/registry';
 import GlobalStyles from '@/styled-component-registry/global-styles';
 
-import { ThemeProvider } from '@/contexts/ThemeProvider';
+import { ThemeProvider } from '@/contexts/Theme';
 import { getThemePreference } from '@/utils/theme';
 import { Funnel_Display } from 'next/font/google';
 import type { Metadata } from 'next';

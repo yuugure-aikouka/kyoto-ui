@@ -5,7 +5,7 @@ import Interactable from '@/components/Interactable';
 
 import { Moon, Sun } from 'react-feather';
 
-import { ThemeContext } from '@/contexts/ThemeProvider';
+import { ThemeContext } from '@/contexts/Theme';
 
 const RotatingKeyframe = keyframes`
   0% {

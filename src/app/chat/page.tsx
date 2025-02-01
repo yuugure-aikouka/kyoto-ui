@@ -1,7 +1,7 @@
 import ChatLayout from '@/components/ChatLayout/ChatLayout';
 import PartnerList from '@/components/PartnerList';
 import ChatBox from '@/components/ChatBox';
-import { CurrentPartnerProvider } from '@/contexts/CurrentPartnerProvider';
+import { CurrentPartnerProvider } from '@/contexts/CurrentPartner';
 import { ChatEnablementProvider } from '@/contexts/ChatEnablement';
 
 import { getPartnerList } from '@/mocks/partner';

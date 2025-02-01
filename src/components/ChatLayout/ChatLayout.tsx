@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { CurrentPartnerContext } from '@/contexts/CurrentPartnerProvider';
+import { CurrentPartnerContext } from '@/contexts/CurrentPartner';
 
 const ChatContainer = styled.div`
   display: flex;

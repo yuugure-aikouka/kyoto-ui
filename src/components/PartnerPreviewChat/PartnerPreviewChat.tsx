@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Avatar from '@/components/Avatar';
 import Interactable from '@/components/Interactable';
 
-import { CurrentPartnerContext } from '@/contexts/CurrentPartnerProvider';
+import { CurrentPartnerContext } from '@/contexts/CurrentPartner';
 import { ChatEnablementContext } from '@/contexts/ChatEnablement/ChatEnablement';
 
 export type PartnerPreviewType = {
