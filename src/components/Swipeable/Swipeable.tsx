@@ -22,10 +22,10 @@ const Container = styled(InteractableContainer)`
 
 const Swipeable = ({ handleDragEnd, children }: Props) => {
   const x = useMotionValue(0);
-  const rotate = useTransform(x, [-150, 150], [-18, 18]);
+  const rotate = useTransform(x, [-75, 75], [-18, 18]);
   const opacity = useTransform(
     x,
-    [-150, -120, 0, 120, 150],
+    [-75, -50, 0, 50, 75],
     [0, 1, 1, 1, 0]
   );
 
@@ -36,7 +36,7 @@ const Swipeable = ({ handleDragEnd, children }: Props) => {
       dragConstraints={{ left: 0, right: 0 }}
       style={{ rotate, x, opacity }}
       onDragEnd={() => {
-        if (Math.abs(x.get()) >= 150) {
+        if (Math.abs(x.get()) >= 75) {
           handleDragEnd();
         }
       }}>
