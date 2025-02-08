@@ -14,7 +14,7 @@ const defaultFont = Funnel_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'mateify',
+  title: 'Anonawa',
 };
 
 export default async function RootLayout({

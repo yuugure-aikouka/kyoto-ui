@@ -5,17 +5,18 @@ type Props = {
   children: [React.ReactNode, React.ReactNode];
 };
 
+export type Mode = 'chat' | 'search';
 export const SectionContext = React.createContext({
   mode: 'chat',
   switchMode: () => {},
 } as {
-  mode: 'chat' | 'search';
-  switchMode: (mode: 'chat' | 'search') => void | null;
+  mode: Mode;
+  switchMode: (mode: Mode) => void | null;
 });
 
-function SectionSwitcher({ children }: Props) {
-  const [mode, setMode] = React.useState<'chat' | 'search'>('chat');
-  const switchMode = (newMode: 'chat' | 'search') => {
+export const SectionSwitcherProvider = ({ children }: Props) => {
+  const [mode, setMode] = React.useState<Mode>('search');
+  const switchMode = (newMode: Mode) => {
     setMode(newMode);
   };
 
@@ -31,6 +32,4 @@ function SectionSwitcher({ children }: Props) {
       {currentSection}
     </SectionContext>
   );
-}
-
-export default SectionSwitcher;
+};

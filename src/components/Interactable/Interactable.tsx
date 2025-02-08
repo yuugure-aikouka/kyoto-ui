@@ -7,13 +7,14 @@ type Props = {
   onClick?: () => void;
 };
 
-const Container = styled.button`
+export const Container = styled.button`
   // reset button default style
   border: none;
   background: none;
   margin: 0;
   padding: 0;
   color: inherit;
+  text-align: inherit;
 
   &:hover {
     cursor: pointer;

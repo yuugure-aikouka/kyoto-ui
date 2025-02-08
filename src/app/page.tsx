@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <Wrapper>
       <div>
-        <h2>mateify</h2>
+        <h2>Anonawa</h2>
         <p>
           connecting you with the perfect mate that you&apos;re
           looking for.
