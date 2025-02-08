@@ -99,23 +99,33 @@ const RegularSearch = () => {
     <Layout>
       <MatchingSection>
         <CardStackContainer>
-          {potentialPartners.toReversed().map((partner, index) => {
-            return (
-              <SwipeableCard
-                // todo: the key should be username
-                // right now we use index cause of the useEffect on usePotentialPartners.
-                key={index}
-                partner={partner}
-                removeCard={() => {
-                  setPotentialPartners((currentPotentialPartners) =>
-                    currentPotentialPartners.filter((_, index) => {
-                      return index !== 0;
-                    })
-                  );
-                }}
-              />
-            );
-          })}
+          {potentialPartners
+            .slice(0, Math.min(3, potentialPartners.length))
+            .toReversed()
+            .map((partner, index) => {
+              if (
+                Math.min(3, potentialPartners.length) - 1 - index !=
+                0
+              ) {
+                return (
+                  <ProfileCard key={partner.username} {...partner} />
+                );
+              }
+
+              return (
+                <SwipeableCard
+                  key={partner.username}
+                  partner={partner}
+                  removeCard={() => {
+                    setPotentialPartners((currentPotentialPartners) =>
+                      currentPotentialPartners.filter((_, index) => {
+                        return index !== 0;
+                      })
+                    );
+                  }}
+                />
+              );
+            })}
         </CardStackContainer>
 
         <OptionSection>
@@ -130,7 +140,14 @@ const RegularSearch = () => {
             </OptionWrapper>
           </Interactable>
 
-          <Interactable>
+          <Interactable
+            onClick={() => {
+              setPotentialPartners((currentPotentialPartners) =>
+                currentPotentialPartners.filter((_, index) => {
+                  return index !== 0;
+                })
+              );
+            }}>
             <OptionWrapper
               style={
                 {

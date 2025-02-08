@@ -15,7 +15,6 @@ const Container = styled.div`
   overflow: hidden;
 
   outline: 2px dashed var(--color-text);
-  /* outline-offset: 4px; */
 `;
 
 const BackgroundImage = styled.div`
