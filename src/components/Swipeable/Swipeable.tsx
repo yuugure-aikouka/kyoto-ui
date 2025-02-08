@@ -3,12 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Container as InteractableContainer } from '@/components/Interactable';
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  AnimatePresence,
-} from 'motion/react';
+import { motion, useMotionValue, useTransform } from 'motion/react';
+import { SwipeDirectionContext } from '@/contexts/SwipeDirection';
 
 type Props = {
   handleDragEnd: () => void;
@@ -24,14 +20,16 @@ const Container = styled(InteractableContainer)`
     cursor: grabbing;
   }
 
-  position: relative;
-  isolation: isolate;
+  display: grid;
+
+  & > * {
+    grid-column: 1;
+    grid-row: 1;
+  }
 `;
 
 const MarkerWrapper = styled.div`
-  position: absolute;
-  inset: 0;
-
+  height: 100%;
   display: grid;
   place-items: center;
 
@@ -60,37 +58,54 @@ const Swipeable = ({ handleDragEnd, children }: Props) => {
   const uninterestedOpacity = useTransform(x, [-30, 0], [1, 0]);
   const markScale = useTransform(x, [-30, 0, 30], [1.5, 0, 1.5]);
 
-  return (
-    <AnimatePresence mode="wait">
-      <Container
-        as={motion.button}
-        drag={true}
-        dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-        style={{ rotate, x, opacity }}
-        exit={{
-          opacity: 0,
-        }}
-        onDragEnd={() => {
-          if (Math.abs(x.get()) >= 75) {
-            handleDragEnd();
-          }
-        }}>
-        {children}
+  const { direction, switchDirection } = React.useContext(
+    SwipeDirectionContext
+  );
 
-        <MarkerWrapper>
-          <Mark style={{ opacity: likeOpacity, scale: markScale }}>
-            💖
-          </Mark>
-          <Mark
-            style={{
-              opacity: uninterestedOpacity,
-              scale: markScale,
-            }}>
-            👎
-          </Mark>
-        </MarkerWrapper>
-      </Container>
-    </AnimatePresence>
+  const exitAnimation =
+    direction == 'right'
+      ? {
+          rotate: 18,
+          x: 75,
+        }
+      : {
+          rotate: -18,
+          x: -75,
+        };
+
+  return (
+    <Container
+      as={motion.button}
+      drag={true}
+      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+      style={{ rotate, x, opacity }}
+      exit={{
+        ...exitAnimation,
+        transition: {
+          duration: 0.5,
+        },
+      }}
+      onDragEnd={() => {
+        if (Math.abs(x.get()) >= 30) {
+          switchDirection(x.get() > 0 ? 'right' : 'left');
+          handleDragEnd();
+        }
+      }}>
+      {children}
+
+      <MarkerWrapper>
+        <Mark style={{ opacity: likeOpacity, scale: markScale }}>
+          💖
+        </Mark>
+        <Mark
+          style={{
+            opacity: uninterestedOpacity,
+            scale: markScale,
+          }}>
+          👎
+        </Mark>
+      </MarkerWrapper>
+    </Container>
   );
 };
 

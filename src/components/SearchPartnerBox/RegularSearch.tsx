@@ -9,6 +9,8 @@ import { Container as InteractableContainer } from '@/components/Interactable';
 import { getPotentialPartners } from '@/mocks/potential-partners';
 import { Check, X } from 'react-feather';
 import { PotentialPartnerType } from '@/mocks/potential-partners';
+import { AnimatePresence } from 'motion/react';
+import { SwipeDirectionContext } from '@/contexts/SwipeDirection';
 
 const Layout = styled.div`
   width: 100%;
@@ -95,41 +97,59 @@ const RegularSearch = () => {
   const [potentialPartners, setPotentialPartners] =
     usePotentialPartners();
 
+  const { switchDirection } = React.useContext(SwipeDirectionContext);
+
   return (
     <Layout>
       <MatchingSection>
         <CardStackContainer>
-          {potentialPartners
-            .slice(0, Math.min(3, potentialPartners.length))
-            .toReversed()
-            .map((partner, index) => {
-              if (
-                Math.min(3, potentialPartners.length) - 1 - index !=
-                0
-              ) {
-                return (
-                  <ProfileCard key={partner.username} {...partner} />
-                );
-              }
+          <AnimatePresence mode="sync">
+            {potentialPartners
+              .slice(0, Math.min(3, potentialPartners.length))
+              .toReversed()
+              .map((partner, index) => {
+                if (
+                  Math.min(3, potentialPartners.length) - 1 - index !=
+                  0
+                ) {
+                  return (
+                    <ProfileCard
+                      key={partner.username}
+                      {...partner}
+                    />
+                  );
+                }
 
-              return (
-                <SwipeableCard
-                  key={partner.username}
-                  partner={partner}
-                  removeCard={() => {
-                    setPotentialPartners((currentPotentialPartners) =>
-                      currentPotentialPartners.filter((_, index) => {
-                        return index !== 0;
-                      })
-                    );
-                  }}
-                />
-              );
-            })}
+                return (
+                  <SwipeableCard
+                    key={partner.username}
+                    partner={partner}
+                    removeCard={() => {
+                      setPotentialPartners(
+                        (currentPotentialPartners) =>
+                          currentPotentialPartners.filter(
+                            (_, index) => {
+                              return index !== 0;
+                            }
+                          )
+                      );
+                    }}
+                  />
+                );
+              })}
+          </AnimatePresence>
         </CardStackContainer>
 
         <OptionSection>
-          <Interactable>
+          <Interactable
+            onClick={() => {
+              switchDirection('left');
+              setPotentialPartners((currentPotentialPartners) =>
+                currentPotentialPartners.filter((_, index) => {
+                  return index !== 0;
+                })
+              );
+            }}>
             <OptionWrapper
               style={
                 {
@@ -142,6 +162,7 @@ const RegularSearch = () => {
 
           <Interactable
             onClick={() => {
+              switchDirection('right');
               setPotentialPartners((currentPotentialPartners) =>
                 currentPotentialPartners.filter((_, index) => {
                   return index !== 0;

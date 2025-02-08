@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import RegularSearch from '@/components/SearchPartnerBox/RegularSearch';
 import Header from '@/components/SearchPartnerBox/Header';
 
+import { SwipeDirectionProvider } from '@/contexts/SwipeDirection';
 import { SearchModeContext } from '@/contexts/CurrentSearchMode';
 
 const EmptyStateContainer = styled.div`
@@ -23,7 +24,11 @@ const Container = styled.div`
 const SearchPartnerBox = () => {
   const { mode } = React.useContext(SearchModeContext);
 
-  let renderedSearchMode = <RegularSearch />;
+  let renderedSearchMode = (
+    <SwipeDirectionProvider>
+      <RegularSearch />
+    </SwipeDirectionProvider>
+  );
   if (mode == 'none') {
     renderedSearchMode = (
       <EmptyStateContainer>
