@@ -103,7 +103,7 @@ const RegularSearch = () => {
             return (
               <SwipeableCard
                 // todo: the key should be username
-                // right now we use index cause of the useEffect on usePotentialPartners
+                // right now we use index cause of the useEffect on usePotentialPartners.
                 key={index}
                 partner={partner}
                 removeCard={() => {
