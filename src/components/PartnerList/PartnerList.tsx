@@ -9,9 +9,15 @@ import Interactable from '@/components/Interactable';
 import ThemeToggle from '@/components/ThemeToggle';
 import BREAKPOINTS_IN_PIXEL from '@/const/BREAKPOINTS';
 
-import { ChevronRight, ChevronLeft } from 'react-feather';
+import {
+  ChevronRight,
+  ChevronLeft,
+  MessageCircle,
+  Search,
+} from 'react-feather';
 import { ChatEnablementContext } from '@/contexts/ChatEnablement/ChatEnablement';
 import { getPartnerList } from '@/mocks/partner';
+import { SectionContext } from '@/contexts/SectionSwitcher';
 
 const Layout = styled.div`
   overflow-y: auto;
@@ -35,7 +41,12 @@ const PartnersContainer = styled.section`
   }
 `;
 
-const OptionSection = styled.section`
+type OptionSectionProps = {
+  // styled component can't have boolean
+  $expanded?: string;
+};
+
+const OptionSection = styled.section<OptionSectionProps>`
   position: sticky;
   top: 0;
   z-index: 1;
@@ -45,11 +56,20 @@ const OptionSection = styled.section`
 
   display: flex;
   align-items: center;
-
+  gap: 16px;
   padding: 24px;
 
-  & > *:first-child {
-    margin-right: auto;
+  // tablet only
+  // 48 rem = 768 / 16 -> tablet max size
+  // prettier just keep messing the lint if i calculate it programmatically (cause of auto newline)
+  @media (min-width: ${(425 + 1) / 16}rem) and (max-width: 48rem) {
+    flex-direction: ${(props) =>
+      props.$expanded == 'true' ? 'row' : 'column'};
+
+    & > *:last-child {
+      margin-left: ${(props) =>
+        props.$expanded == 'true' ? 'auto' : '0'};
+    }
   }
 `;
 
@@ -119,7 +139,44 @@ const formatPartnerPreview = ({
   };
 };
 
-function PartnerList() {
+const Options = ({
+  showDetail,
+  toggleShowDetail,
+}: {
+  showDetail: boolean;
+  toggleShowDetail: () => void;
+}) => {
+  const { switchMode } = React.useContext(SectionContext);
+
+  return (
+    // styled component props can't be a boolean
+    <OptionSection $expanded={showDetail.toString()}>
+      <ThemeToggle />
+
+      <Interactable
+        onClick={() => {
+          switchMode('chat');
+        }}>
+        <MessageCircle size={`${22 / 16}rem`} />
+      </Interactable>
+
+      <Interactable
+        onClick={() => {
+          switchMode('search');
+        }}>
+        <Search size={`${22 / 16}rem`} />
+      </Interactable>
+
+      <ToggleExpand>
+        <Interactable onClick={toggleShowDetail}>
+          {!showDetail ? <ChevronRight /> : <ChevronLeft />}
+        </Interactable>
+      </ToggleExpand>
+    </OptionSection>
+  );
+};
+
+const PartnerList = () => {
   // mobile only state
   const [showDetail, toggleShowDetail] = useMobileResponsiveness();
 
@@ -129,15 +186,10 @@ function PartnerList() {
 
   return (
     <Layout>
-      <OptionSection>
-        <ThemeToggle />
-
-        <ToggleExpand>
-          <Interactable onClick={toggleShowDetail}>
-            {!showDetail ? <ChevronRight /> : <ChevronLeft />}
-          </Interactable>
-        </ToggleExpand>
-      </OptionSection>
+      <Options
+        showDetail={showDetail}
+        toggleShowDetail={toggleShowDetail}
+      />
 
       <PartnersContainer>
         {partnerList.map((partnerPreview) => {
@@ -152,6 +204,6 @@ function PartnerList() {
       </PartnersContainer>
     </Layout>
   );
-}
+};
 
 export default PartnerList;
