@@ -8,13 +8,13 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
 
-  background-color: var(--color-dark);
-  color: var(--color-white);
+  background-color: var(--color-background);
+  color: var(--color-text);
 
   border-radius: 16px;
   overflow: hidden;
 
-  outline: 2px dashed var(--color-secondary);
+  outline: 2px dashed var(--color-text);
   /* outline-offset: 4px; */
 `;
 
@@ -32,7 +32,7 @@ const AvatarWrapper = styled.div`
   background-color: var(--color-dark);
   border-radius: 50%;
 
-  outline: 2px dashed var(--color-white);
+  outline: 2px dashed var(--color-text);
   outline-offset: 2px;
 `;
 
