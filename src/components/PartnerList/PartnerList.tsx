@@ -11,10 +11,7 @@ import BREAKPOINTS_IN_PIXEL from '@/const/BREAKPOINTS';
 
 import { ChevronRight, ChevronLeft } from 'react-feather';
 import { ChatEnablementContext } from '@/contexts/ChatEnablement/ChatEnablement';
-
-export type PartnerPreviewListType = {
-  partners: PartnerPreviewType[];
-};
+import { getPartnerList } from '@/mocks/partner';
 
 const Layout = styled.div`
   overflow-y: auto;
@@ -100,9 +97,35 @@ const useMobileResponsiveness = (): [
   return [!isChatActive, toggleShowDetail];
 };
 
-function PartnerList({ partners }: PartnerPreviewListType) {
+const formatPartnerPreview = ({
+  display_name,
+  avatar_url,
+  is_ai,
+  last_chat,
+  username,
+}: {
+  display_name: string;
+  avatar_url: string;
+  is_ai: boolean;
+  last_chat: string;
+  username: string;
+}): PartnerPreviewType => {
+  return {
+    displayName: display_name,
+    avatarSrc: avatar_url,
+    isAi: is_ai,
+    lastChat: last_chat,
+    username,
+  };
+};
+
+function PartnerList() {
   // mobile only state
   const [showDetail, toggleShowDetail] = useMobileResponsiveness();
+
+  const partnerList = getPartnerList().map((entry) =>
+    formatPartnerPreview(entry)
+  );
 
   return (
     <Layout>
@@ -117,7 +140,7 @@ function PartnerList({ partners }: PartnerPreviewListType) {
       </OptionSection>
 
       <PartnersContainer>
-        {partners.map((partnerPreview) => {
+        {partnerList.map((partnerPreview) => {
           return (
             <PartnerPreviewChat
               forceShowChatPreview={showDetail}

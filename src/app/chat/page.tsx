@@ -4,41 +4,12 @@ import ChatBox from '@/components/ChatBox';
 import { CurrentPartnerProvider } from '@/contexts/CurrentPartner';
 import { ChatEnablementProvider } from '@/contexts/ChatEnablement';
 
-import { getPartnerList } from '@/mocks/partner';
-import { PartnerPreviewType } from '@/components/PartnerPreviewChat';
-
-const formatPartnerPreview = ({
-  display_name,
-  avatar_url,
-  is_ai,
-  last_chat,
-  username,
-}: {
-  display_name: string;
-  avatar_url: string;
-  is_ai: boolean;
-  last_chat: string;
-  username: string;
-}): PartnerPreviewType => {
-  return {
-    displayName: display_name,
-    avatarSrc: avatar_url,
-    isAi: is_ai,
-    lastChat: last_chat,
-    username,
-  };
-};
-
 const Page = () => {
-  const partnerList = getPartnerList().map((entry) =>
-    formatPartnerPreview(entry)
-  );
-
   return (
     <CurrentPartnerProvider>
       <ChatEnablementProvider>
         <ChatLayout>
-          <PartnerList partners={partnerList} />
+          <PartnerList />
           <ChatBox />
         </ChatLayout>
       </ChatEnablementProvider>
