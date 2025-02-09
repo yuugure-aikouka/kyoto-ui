@@ -21,34 +21,33 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const SearchPartnerBox = () => {
-  const { mode } = React.useContext(SearchModeContext);
-
-  let renderedSearchMode = (
+const SEARCH_MAPPER: {
+  [key: string]: React.ReactNode;
+} = {
+  none: (
+    <EmptyStateContainer>
+      how would you prefer to find your perfect match?
+    </EmptyStateContainer>
+  ),
+  random: (
+    <EmptyStateContainer>
+      not yet available, come check again later!
+    </EmptyStateContainer>
+  ),
+  regular: (
     <SwipeDirectionProvider>
       <RegularSearch />
     </SwipeDirectionProvider>
-  );
-  if (mode == 'none') {
-    renderedSearchMode = (
-      <EmptyStateContainer>
-        how would you prefer to find your perfect match?
-      </EmptyStateContainer>
-    );
-  }
+  ),
+};
 
-  if (mode == 'random') {
-    renderedSearchMode = (
-      <EmptyStateContainer>
-        not yet available, come check again later!
-      </EmptyStateContainer>
-    );
-  }
+const SearchPartnerBox = () => {
+  const { mode } = React.useContext(SearchModeContext);
 
   return (
     <Container>
       <Header />
-      {renderedSearchMode}
+      {SEARCH_MAPPER[mode]}
     </Container>
   );
 };

@@ -8,22 +8,11 @@ import { X } from 'react-feather';
 
 const Container = styled.section`
   display: flex;
-  gap: 8px;
-  gap: clamp(8px, 4%, 16px);
-  align-items: center;
+  flex-direction: row-reverse;
 
-  height: fit-content;
-  padding-block: 8px;
-
+  padding-block: 16px;
   padding-inline: 24px;
   padding-inline-end: min(24px, 4%);
-  // to make it symmetrical visually
-  // see comment in PartnerPreviewChat.tsx:~32
-  padding-inline-start: min(12px, 2%);
-
-  & > *:last-child {
-    margin-left: auto;
-  }
 `;
 
 const Header = () => {
@@ -34,6 +23,8 @@ const Header = () => {
   };
 
   if (mode == 'none') {
+    // <div /> is considered an invalid HTML tag
+    // but tsx compiles it into <div><div/>
     return <div />;
   }
 

@@ -43,7 +43,7 @@ const OptionWrapper = styled.div`
   border-radius: 50%;
 
   transition: transform 250ms var(--ease-out);
-  ${InteractableContainer}:hover &, ${InteractableContainer}:focus & {
+  ${InteractableContainer}:hover & {
     transform: translateY(-10%);
   }
 `;

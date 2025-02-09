@@ -6,6 +6,7 @@ import Interactable from '@/components/Interactable';
 import ThemeToggle from '@/components/ThemeToggle';
 import ModeCard from '@/components/ModeCard';
 
+import { Mode as SearchMode } from '@/contexts/CurrentSearchMode';
 import { MessageCircle, Search } from 'react-feather';
 import { SectionContext } from '@/contexts/SectionSwitcher';
 import { SearchModeContext } from '@/contexts/CurrentSearchMode';
@@ -69,7 +70,7 @@ type Mode = {
   title: string;
   description: string;
   illustration: string;
-  id: 'regular' | 'random';
+  id: SearchMode;
 };
 
 // for now, we don't save the available mode in the server
@@ -94,6 +95,7 @@ const SearchModeList = () => {
   return (
     <Layout>
       <Options />
+
       <ModeList>
         {MODES.map(({ id, title, description, illustration }) => {
           return (
