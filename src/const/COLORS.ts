@@ -19,7 +19,6 @@ export const LIGHT_COLORS = {
 
   // blue
   '--color-info': 'hsl(204deg 87% 52%)',
-  '--color-purple': 'hsl(245deg 98% 75%)',
 
   ...COMMON_COLORS,
 };
@@ -32,7 +31,6 @@ export const DARK_COLORS = {
   '--color-secondary': 'hsl(0deg 0% 45%)',
 
   '--color-info': 'hsl(213 100% 45%)',
-  '--color-purple': 'hsl(245deg 98% 67%)',
 
   ...COMMON_COLORS,
 };

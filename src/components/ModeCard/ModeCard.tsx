@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Container = styled.div`
-  background-color: var(--color-purple);
+  background-color: var(--color-primary);
   color: var(--color-white);
 
   display: flex;

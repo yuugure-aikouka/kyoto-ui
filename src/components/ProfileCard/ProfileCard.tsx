@@ -19,7 +19,7 @@ const Container = styled.div`
 
 const BackgroundImage = styled.div`
   height: 96px;
-  background-color: var(--color-purple);
+  background-color: var(--color-primary);
 `;
 
 const AvatarWrapper = styled.div`
@@ -28,11 +28,10 @@ const AvatarWrapper = styled.div`
   margin-top: calc(-${40 / 16}rem - 16px);
 
   width: fit-content;
-  background-color: var(--color-dark);
+  background-color: var(--color-background);
   border-radius: 50%;
 
   outline: 2px dashed var(--color-text);
-  outline-offset: 2px;
 `;
 
 const InformationSection = styled.section`
