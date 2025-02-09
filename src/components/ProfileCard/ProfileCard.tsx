@@ -6,7 +6,7 @@ import Avatar from '@/components/Avatar';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: inherit;
 
   background-color: var(--color-background);
   color: var(--color-text);

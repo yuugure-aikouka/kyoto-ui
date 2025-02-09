@@ -18,11 +18,22 @@ const EmptyStateContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+
+  height: 100vh;
+  height: 100dvh;
+
+  --header-height: clamp(2rem, 20%, 4rem);
+  & > *:first-child {
+    height: var(--header-height);
+  }
+
+  & > *:last-child {
+    height: calc(100% - var(--header-height));
+  }
 `;
 
 const SEARCH_MAPPER: {
-  [key: string]: React.ReactNode;
+  [key in 'none' | 'random' | 'regular']: React.ReactNode;
 } = {
   none: (
     <EmptyStateContainer>

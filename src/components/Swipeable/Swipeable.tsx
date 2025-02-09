@@ -12,6 +12,8 @@ type Props = {
 };
 
 const Container = styled(InteractableContainer)`
+  height: 100%;
+
   &:hover {
     cursor: grab;
   }

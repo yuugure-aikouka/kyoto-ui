@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import ProfileCard from '@/components/ProfileCard';
 import Interactable from '@/components/Interactable';
 import Swipeable from '@/components/Swipeable';
+import useRegularSearchData from '@/hooks/useRegularSearchData';
 
 import { Container as InteractableContainer } from '@/components/Interactable';
-import { getPotentialPartners } from '@/mocks/potential-partners';
 import { Check, X } from 'react-feather';
 import { PotentialPartnerType } from '@/mocks/potential-partners';
 import { AnimatePresence } from 'motion/react';
@@ -14,19 +14,25 @@ import { SwipeDirectionContext } from '@/contexts/SwipeDirection';
 
 const Layout = styled.div`
   width: 100%;
+  height: 100%;
 
   display: grid;
   place-items: center;
-  flex: 1;
 
-  padding: 8px;
+  padding: 16px;
 `;
 
 const MatchingSection = styled.section`
   width: min(424px, 96%);
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
   & > *:first-child {
-    height: min(96vh, 620px);
+    flex: 1;
+    max-height: 648px;
   }
 `;
 
@@ -71,84 +77,56 @@ const SwipeableCard = ({
   );
 };
 
-const usePotentialPartners = (): [
-  PotentialPartnerType[],
-  React.Dispatch<React.SetStateAction<PotentialPartnerType[]>>
-] => {
-  const [potentialPartners, setPotentialPartners] = React.useState<
-    PotentialPartnerType[]
-  >(getPotentialPartners());
+const isTheFirstPartnerReversed = (
+  index: number,
+  length: number
+): boolean => {
+  return length - 1 - index == 0;
+};
 
-  React.useEffect(() => {
-    if (potentialPartners.length <= 5) {
-      const newPotentialPartners = [
-        ...potentialPartners,
-        ...getPotentialPartners(),
-      ];
+const renderActiveProfileCards = (
+  partners: PotentialPartnerType[],
+  removeFirstPartner: () => void
+): React.ReactNode => {
+  const renderedCards = Math.min(2, partners.length);
 
-      setPotentialPartners(newPotentialPartners);
-    }
-  }, [potentialPartners]);
-
-  return [potentialPartners, setPotentialPartners];
+  return (
+    <AnimatePresence mode="sync">
+      {partners
+        .slice(0, renderedCards)
+        .toReversed()
+        .map((partner, index) => {
+          if (isTheFirstPartnerReversed(index, renderedCards)) {
+            return (
+              <SwipeableCard
+                key={partner.username}
+                partner={partner}
+                removeCard={removeFirstPartner}
+              />
+            );
+          }
+          return <ProfileCard key={partner.username} {...partner} />;
+        })}
+    </AnimatePresence>
+  );
 };
 
 const RegularSearch = () => {
-  const [potentialPartners, setPotentialPartners] =
-    usePotentialPartners();
-
   const { switchDirection } = React.useContext(SwipeDirectionContext);
+  const [partners, removeFirstPartner] = useRegularSearchData();
 
   return (
     <Layout>
       <MatchingSection>
         <CardStackContainer>
-          <AnimatePresence mode="sync">
-            {potentialPartners
-              .slice(0, Math.min(2, potentialPartners.length))
-              .toReversed()
-              .map((partner, index) => {
-                if (
-                  Math.min(2, potentialPartners.length) - 1 - index !=
-                  0
-                ) {
-                  return (
-                    <ProfileCard
-                      key={partner.username}
-                      {...partner}
-                    />
-                  );
-                }
-
-                return (
-                  <SwipeableCard
-                    key={partner.username}
-                    partner={partner}
-                    removeCard={() => {
-                      setPotentialPartners(
-                        (currentPotentialPartners) =>
-                          currentPotentialPartners.filter(
-                            (_, index) => {
-                              return index !== 0;
-                            }
-                          )
-                      );
-                    }}
-                  />
-                );
-              })}
-          </AnimatePresence>
+          {renderActiveProfileCards(partners, removeFirstPartner)}
         </CardStackContainer>
 
         <OptionSection>
           <Interactable
             onClick={() => {
               switchDirection('left');
-              setPotentialPartners((currentPotentialPartners) =>
-                currentPotentialPartners.filter((_, index) => {
-                  return index !== 0;
-                })
-              );
+              removeFirstPartner();
             }}>
             <OptionWrapper
               style={
@@ -163,11 +141,7 @@ const RegularSearch = () => {
           <Interactable
             onClick={() => {
               switchDirection('right');
-              setPotentialPartners((currentPotentialPartners) =>
-                currentPotentialPartners.filter((_, index) => {
-                  return index !== 0;
-                })
-              );
+              removeFirstPartner();
             }}>
             <OptionWrapper
               style={
