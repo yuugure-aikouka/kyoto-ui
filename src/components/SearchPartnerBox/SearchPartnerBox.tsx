@@ -22,11 +22,13 @@ const Container = styled.div`
   height: 100vh;
   height: 100dvh;
 
+  // header
   --header-height: clamp(2rem, 20%, 4rem);
   & > *:first-child {
     height: var(--header-height);
   }
 
+  // search partner box
   & > *:last-child {
     height: calc(100% - var(--header-height));
   }
