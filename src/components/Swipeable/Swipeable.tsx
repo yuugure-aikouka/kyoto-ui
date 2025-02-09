@@ -43,6 +43,7 @@ const Mark = styled(motion.span)`
   font-size: 4rem;
 `;
 
+// todo: this currently looks like a one-off component
 const Swipeable = ({ handleDragEnd, children }: Props) => {
   // main card
   const x = useMotionValue(0);
@@ -82,7 +83,7 @@ const Swipeable = ({ handleDragEnd, children }: Props) => {
       exit={{
         ...exitAnimation,
         transition: {
-          duration: 0.5,
+          duration: 0.35,
         },
       }}
       onDragEnd={() => {

@@ -105,11 +105,11 @@ const RegularSearch = () => {
         <CardStackContainer>
           <AnimatePresence mode="sync">
             {potentialPartners
-              .slice(0, Math.min(3, potentialPartners.length))
+              .slice(0, Math.min(2, potentialPartners.length))
               .toReversed()
               .map((partner, index) => {
                 if (
-                  Math.min(3, potentialPartners.length) - 1 - index !=
+                  Math.min(2, potentialPartners.length) - 1 - index !=
                   0
                 ) {
                   return (
