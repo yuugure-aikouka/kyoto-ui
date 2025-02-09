@@ -56,20 +56,6 @@ const CardStackContainer = styled.div`
   }
 `;
 
-const SwipeableCard = ({
-  partner,
-  removeCard,
-}: {
-  partner: PotentialPartnerType;
-  removeCard: () => void;
-}) => {
-  return (
-    <Swipeable handleDragEnd={removeCard}>
-      <ProfileCard {...partner} />
-    </Swipeable>
-  );
-};
-
 const renderActiveProfileCards = (
   partners: PotentialPartnerType[],
   removeFirstPartner: () => void
@@ -88,11 +74,11 @@ const renderActiveProfileCards = (
         .map((partner, index) => {
           if (isFront(index, renderedCards)) {
             return (
-              <SwipeableCard
+              <Swipeable
                 key={partner.username}
-                partner={partner}
-                removeCard={removeFirstPartner}
-              />
+                handleDragEnd={removeFirstPartner}>
+                <ProfileCard {...partner} />
+              </Swipeable>
             );
           }
           return <ProfileCard key={partner.username} {...partner} />;
