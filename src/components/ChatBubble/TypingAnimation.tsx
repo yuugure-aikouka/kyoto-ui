@@ -42,7 +42,7 @@ const Circle = styled.span`
   height: var(--size);
   width: var(--size);
 
-  background-color: var(--color-text);
+  background-color: var(--color-white);
   border-radius: 50%;
 
   animation: ${Waiting} var(--duration) 1 var(--ease-out);
