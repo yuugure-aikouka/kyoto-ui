@@ -10,9 +10,16 @@ type Props = {
   sender: 'me' | 'them';
 };
 
-const COLOR_MAPPER = {
+const COLOR_MAPPER: { [key in 'me' | 'them']: string } = {
   me: 'var(--color-secondary)',
   them: 'var(--color-primary)',
+};
+
+const TEXT_COLOR_MAPPER: { [key in 'me' | 'them']: string } = {
+  me: 'var(--color-text)',
+  // todo: do smth about it
+  // stripe's purple is too dark for a black text to be barely visible
+  them: 'var(--color-white)',
 };
 
 const MARGIN_LEFT_MAPPER = {
@@ -52,6 +59,7 @@ export const Container = styled.div`
 `;
 
 const Content = styled.p`
+  color: var(--color);
   word-break: break-all;
   hyphens: auto;
   -webkit-hyphens: auto;
@@ -71,7 +79,14 @@ const ChatBubble = ({ children, sender }: Props) => {
             BORDER_BOTTOM_LEFT_RADIUS_MAPPER[sender],
         } as React.CSSProperties
       }>
-      <Content>{children}</Content>
+      <Content
+        style={
+          {
+            '--color': TEXT_COLOR_MAPPER[sender],
+          } as React.CSSProperties
+        }>
+        {children}
+      </Content>
     </Container>
   );
 };

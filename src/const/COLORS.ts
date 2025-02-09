@@ -13,7 +13,7 @@ export const LIGHT_COLORS = {
   '--color-background': 'hsl(0deg 0% 100%)',
 
   // stripe's / discord's purple
-  '--color-primary': 'hsl(245deg 98% 80%)',
+  '--color-primary': 'hsl(245deg 98% 67%)',
   // grey
   '--color-secondary': 'hsl(0deg 0% 92%)',
 
