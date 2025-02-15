@@ -25,6 +25,7 @@ const Container = styled.div`
 
 const Input = styled.input`
   border: none;
+  color: var(--color-text);
   background-color: var(--color-secondary);
   width: 100%;
 
