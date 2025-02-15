@@ -35,7 +35,6 @@ const ChatContainer = styled.div`
 const Layout = ({
   children,
 }: {
-  // partner list (developed later) & chat room
   children: [React.ReactNode, React.ReactNode];
 }) => {
   const { username } = React.useContext(CurrentPartnerContext);

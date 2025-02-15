@@ -1,46 +1,36 @@
 import ChatLayout from '@/components/ChatLayout/ChatLayout';
+import SearchPartnersLayout from '@/components/SearchPartnersLayout';
+import SearchModeList from '@/components/SearchModeList';
+import SearchPartnerBox from '@/components/SearchPartnerBox';
 import PartnerList from '@/components/PartnerList';
 import ChatBox from '@/components/ChatBox';
 import { CurrentPartnerProvider } from '@/contexts/CurrentPartner';
 import { ChatEnablementProvider } from '@/contexts/ChatEnablement';
-
-import { getPartnerList } from '@/mocks/partner';
-import { PartnerPreviewType } from '@/components/PartnerPreviewChat';
-
-const formatPartnerPreview = ({
-  display_name,
-  avatar_url,
-  is_ai,
-  last_chat,
-  username,
-}: {
-  display_name: string;
-  avatar_url: string;
-  is_ai: boolean;
-  last_chat: string;
-  username: string;
-}): PartnerPreviewType => {
-  return {
-    displayName: display_name,
-    avatarSrc: avatar_url,
-    isAi: is_ai,
-    lastChat: last_chat,
-    username,
-  };
-};
+import { SectionSwitcherProvider } from '@/contexts/SectionSwitcher';
+import { CurrentSearchModeProvider } from '@/contexts/CurrentSearchMode';
 
 const Page = () => {
-  const partnerList = getPartnerList().map((entry) =>
-    formatPartnerPreview(entry)
-  );
-
   return (
     <CurrentPartnerProvider>
       <ChatEnablementProvider>
-        <ChatLayout>
-          <PartnerList partners={partnerList} />
-          <ChatBox />
-        </ChatLayout>
+        <SectionSwitcherProvider>
+          {/* each section has their own layout to ease the future changes */}
+          <ChatLayout>
+            {/* todo: perhaps we could move the partner list state into a provider */}
+            <PartnerList />
+            <ChatBox />
+          </ChatLayout>
+          {/* -- end of chat section -- */}
+
+          {/* we use the provider at this level cuz it does not have any network call */}
+          <CurrentSearchModeProvider>
+            <SearchPartnersLayout>
+              <SearchModeList />
+              <SearchPartnerBox />
+            </SearchPartnersLayout>
+          </CurrentSearchModeProvider>
+          {/* -- end of search partner section -- */}
+        </SectionSwitcherProvider>
       </ChatEnablementProvider>
     </CurrentPartnerProvider>
   );

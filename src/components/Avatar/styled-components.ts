@@ -7,4 +7,8 @@ export const Container = styled.div`
 
   isolation: isolate;
   position: relative;
+
+  *:has(> &) {
+    isolation: isolate;
+  }
 `;

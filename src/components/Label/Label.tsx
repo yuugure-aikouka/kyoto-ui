@@ -17,6 +17,7 @@ const COLOR_MAPPER = {
 const Container = styled.span`
   border-radius: 6px;
   background-color: var(--color-primary);
+  color: var(--color-white);
   width: fit-content;
 
   padding: 2px 6px;

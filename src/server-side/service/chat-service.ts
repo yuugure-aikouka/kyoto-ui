@@ -19,7 +19,7 @@ const getAiResponse = async ({
   }
 
   const prompt = `
-You are roleplaying as ${characterName} in the app Mateify. You respond as if you’re talking to a friend. Don't use capital letters or asterisk.
+You are roleplaying as ${characterName} in the app Anonawa. You respond as if you’re talking to a friend. Don't use capital letters or asterisk.
 
 Here's the chat history for context: ${history}
 
