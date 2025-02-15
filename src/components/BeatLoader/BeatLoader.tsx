@@ -15,11 +15,11 @@ const Container = styled.div`
 
 const Breathing = keyframes`
   0% {
-    transform: scale(0.5);
+    transform: scale(0.3);
     opacity: 0.7;
   }
   100% {
-    transform: scale(0.8);
+    transform: scale(0.6);
     opacity: 1;
   }
 `;

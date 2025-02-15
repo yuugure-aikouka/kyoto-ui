@@ -31,7 +31,7 @@ type Props = {
   loading: React.ReactNode;
   success: string;
 
-  onClick: () => void;
+  onClick: () => boolean;
 };
 
 function MultiStepButton({ idle, loading, success, onClick }: Props) {
@@ -50,8 +50,12 @@ function MultiStepButton({ idle, loading, success, onClick }: Props) {
       <Button
         disabled={state !== 'idle'}
         onClick={() => {
+          const shouldFire = onClick();
+          if (!shouldFire) {
+            return;
+          }
+
           setState('loading');
-          onClick();
 
           setTimeout(() => {
             setState('success');

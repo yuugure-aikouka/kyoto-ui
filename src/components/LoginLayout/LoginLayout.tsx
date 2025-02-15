@@ -7,26 +7,12 @@ const Layout = styled.div`
   place-items: center;
 
   // fallback for dvh incase it isn't supported
-  height: 100vh;
-  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding: 16px;
 
   // https://www.joshwcomeau.com/gradient-generator/
-  /* background-image: linear-gradient(
-    10deg,
-    hsl(245deg 85% 44%) 0%,
-    hsl(245deg 72% 51%) 5%,
-    hsl(246deg 79% 56%) 11%,
-    hsl(245deg 87% 62%) 19%,
-    hsl(245deg 98% 67%) 28%,
-    hsl(245deg 94% 66%) 39%,
-    hsl(245deg 91% 64%) 49%,
-    hsl(245deg 88% 63%) 60%,
-    hsl(245deg 85% 62%) 70%,
-    hsl(245deg 86% 63%) 79%,
-    hsl(245deg 88% 64%) 87%,
-    hsl(245deg 90% 65%) 94%,
-    hsl(245deg 92% 67%) 100%
-  ); */
   background-image: linear-gradient(
     45deg,
     hsl(245deg 82% 56%) 0%,
